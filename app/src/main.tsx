@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Root from './routes/root.tsx';
-import Login from './pages/Login.tsx';
+import Login from './pages/Login/Login.tsx';
 
 const router = createBrowserRouter([
     {
