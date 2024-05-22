@@ -1,5 +1,9 @@
 .container {
     background-color: #131420;
 
-    padding-block: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
 }
