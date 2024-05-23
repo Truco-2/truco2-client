@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
     # image project
     react-app:
@@ -5,18 +7,18 @@ services:
             context: ./app
         restart: unless-stopped
         command: sh -c "npm ci && npm run build && npm run server"
-        container_name: truco2-client-app-staging
+        container_name: truco2-client-app
         volumes:
             - ./app:/app/
         networks:
             - appnet
     nginx:
         restart: unless-stopped
-        container_name: truco2-client-nginx-staging
+        container_name: truco2-client-nginx
         build:
             context: ./nginx
         ports:
-            - "8217:80"
+            - "8017:80"
         networks:
             - appnet
         depends_on:

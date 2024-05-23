@@ -4,14 +4,12 @@ services:
         build:
             context: ./app
         restart: unless-stopped
-        command: sh -c "npm install && npm run dev"
+        command: sh -c "npm ci && npm run build && npm run server"
         container_name: truco2-client-app-devel
         volumes:
             - ./app:/app/
         networks:
             - appnet
-        ports:
-            - "4300:4200"
     nginx:
         restart: unless-stopped
         container_name: truco2-client-nginx-devel
