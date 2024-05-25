@@ -6,4 +6,52 @@
     justify-content: center;
 
     height: 100vh;
+
+    .containerFlex {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+
+        h1 {
+            font-size: 40px;
+            color: #FFFFFF;
+        }
+
+        p {
+            color: #FFFFFFB2;
+        }
+
+        .logoBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // justify-content: center;
+            background-color: #DC8230;
+            border-radius: 1rem 0 0 1rem;
+            padding: 80px 40px;
+            gap: 20%;
+        }
+
+        .formBox {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            // align-items: center;
+            // background-color: #FFFFFF;
+            background-color: #131420D9;
+            border-radius: 0 1rem 1rem 0;
+            padding: 5rem 5rem 5rem 11.25rem;
+
+            .textFieldBox {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    }
 }
