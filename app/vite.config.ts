@@ -7,5 +7,19 @@ export default defineConfig({
   server: {
     host: true,
     port: 4200,
+    watch: {
+      usePolling: true
+    }
+    // hmr: {
+    //   protocol: 'ws',
+    //   host: 'localhost',
+    //   clientPort: 4200,
+    //   overlay: false
+    // },
+    // hmr: {
+    //   clientPort: 4200,
+    //   overlay: false
+    // },
+    // origin: 'https//:localhost:4200'
   },
 });
