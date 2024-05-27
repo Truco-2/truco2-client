@@ -23,10 +23,6 @@ import { setCookies } from 'helpers/cookies.ts';
 import { TextField } from 'components/ui/TextField';
 import { Button } from 'components/ui/Button';
 
-interface IBaseButton {
-    primary: boolean;
-}
-
 const loginSchema = z.object({
     email: z.string(),
     password: z.string(),

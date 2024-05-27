@@ -13,7 +13,6 @@ import React, { ReactElement, useState } from 'react';
 import styles from './Sidebar.module.scss';
 import { LogoContained } from 'assets/Logo';
 import PlayIcon from 'assets/PlayIcon.svg';
-import GamesIcon from 'assets/GamesIcon.svg';
 import NewsIcon from 'assets/NewsIcon.svg';
 import ProfileIcon from 'assets/ProfileIcon.svg';
 import LogoutIcon from 'assets/LogOutIcon.svg';
