@@ -1,8 +1,10 @@
+import { Box } from '@mui/material';
 import * as React from 'react';
+import styles from './Logo.module.scss';
 
 interface ILogoProps {
-    width: number;
-    height: number;
+    width: string;
+    height: string;
 }
 
 const Logo: React.FC<ILogoProps> = ({ height, width }) => (
@@ -48,3 +50,14 @@ const Logo: React.FC<ILogoProps> = ({ height, width }) => (
     </svg>
 );
 export default Logo;
+
+export const LogoContained: React.FC<ILogoProps> = ({ width, height }) => {
+    return (
+        <Box
+            className={styles.logoContained}
+            sx={{ width: width, height: height }}
+        >
+            <Logo width={width} height={height} />
+        </Box>
+    );
+};
