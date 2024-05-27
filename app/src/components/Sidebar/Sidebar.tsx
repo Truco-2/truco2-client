@@ -8,6 +8,7 @@ import {
     ListItemText,
     Typography,
 } from '@mui/material';
+import { Home } from '@mui/icons-material';
 import React, { ReactElement, useState } from 'react';
 import styles from './Sidebar.module.scss';
 import { LogoContained } from 'assets/Logo';
@@ -16,23 +17,35 @@ import GamesIcon from 'assets/GamesIcon.svg';
 import NewsIcon from 'assets/NewsIcon.svg';
 import ProfileIcon from 'assets/ProfileIcon.svg';
 import LogoutIcon from 'assets/LogOutIcon.svg';
+import { useNavigate } from 'react-router-dom';
+import { cleanCookies } from 'helpers/cookies';
+import { userInformations } from 'helpers/session';
 
-type options = 'Jogar' | 'Jogos' | 'Carreira' | 'Perfil';
+type options = 'Home' | 'Jogar' | 'Carreira' | 'Perfil';
 
 interface IOptions {
     text: options;
     icon: ReactElement;
+    url: string;
 }
 
 const options: IOptions[] = [
-    { text: 'Jogar', icon: <PlayIcon /> },
-    { text: 'Jogos', icon: <GamesIcon /> },
-    { text: 'Carreira', icon: <NewsIcon /> },
-    { text: 'Perfil', icon: <ProfileIcon /> },
+    { text: 'Home', icon: <Home />, url: '/' },
+    { text: 'Jogar', icon: <PlayIcon />, url: '/play' },
+    { text: 'Carreira', icon: <NewsIcon />, url: '/career' },
+    { text: 'Perfil', icon: <ProfileIcon />, url: '/profile' },
 ];
 
 const SidebarOptions: React.FC = () => {
-    const [optionSelected, setOptionSelected] = useState<options>('Jogar');
+    const [optionSelected, setOptionSelected] = useState<options>('Home');
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        cleanCookies('userToken');
+
+        navigate('/login');
+    };
 
     return (
         <Box className={styles.sidebarListContainer}>
@@ -51,7 +64,10 @@ const SidebarOptions: React.FC = () => {
                                         ? styles.selectedListItemButton
                                         : styles.listItemButton
                                 }
-                                onClick={() => setOptionSelected(option.text)}
+                                onClick={() => {
+                                    setOptionSelected(option.text);
+                                    navigate(option.url);
+                                }}
                             >
                                 <ListItemIcon
                                     className={
@@ -85,6 +101,7 @@ const SidebarOptions: React.FC = () => {
                         <ListItemText
                             primary={'Sair'}
                             className={styles.listItemText}
+                            onClick={() => handleLogout()}
                         />
                     </ListItemButton>
                 </ListItem>
@@ -96,9 +113,15 @@ const SidebarOptions: React.FC = () => {
 const Sidebar: React.FC = () => {
     return (
         <Box className={styles.sidebarContainer}>
-            <Box className={styles.titleContainer}>
-                <LogoContained width={'20px'} height={'20px'} />
-                <Typography className={styles.title}>Truco 2</Typography>
+            <Box className={styles.header}>
+                <Box className={styles.titleContainer}>
+                    <LogoContained width={'20px'} height={'20px'} />
+                    <Typography className={styles.title}>Truco 2</Typography>
+                </Box>
+
+                <Typography className={styles.subtitle}>
+                    Hi {userInformations().username}
+                </Typography>
             </Box>
             {<SidebarOptions />}
         </Box>

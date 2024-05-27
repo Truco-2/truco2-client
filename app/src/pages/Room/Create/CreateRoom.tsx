@@ -1,11 +1,7 @@
-import { Box, Button, TextField, Typography, styled } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import styles from './CreateRoom.module.scss';
-
-const StyledTextField = styled(TextField)(() => ({
-    input: {
-        color: '#ffffffb2',
-    },
-}));
+import { Button } from 'components/ui/Button';
+import { TextField } from 'components/ui/TextField';
 
 const CreateRoom: React.FC = () => {
     return (
@@ -16,43 +12,24 @@ const CreateRoom: React.FC = () => {
             </Typography>
             <Box className={styles.inputContainer}>
                 <Typography className={styles.inputLabel}>Nome</Typography>
-                <StyledTextField
-                    variant="standard"
-                    InputProps={{
-                        disableUnderline: true,
-                    }}
-                    placeholder="Nome da Sala"
-                    className={styles.input}
-                />
+
+                <TextField placeholder="Nome da Sala" fullWidth />
             </Box>
             <Box className={styles.inputContainer}>
                 <Typography className={styles.inputLabel}>
                     Modo de sala
                 </Typography>
-                <StyledTextField
-                    variant="standard"
-                    InputProps={{
-                        disableUnderline: true,
-                    }}
-                    placeholder="Modo de Sala"
-                    className={styles.input}
-                />
+                <TextField placeholder="Público ou Privado" />
             </Box>
             <Box className={styles.inputContainer}>
                 <Typography className={styles.inputLabel}>
                     Limite de jogadores
                 </Typography>
-                <StyledTextField
-                    variant="standard"
-                    type="number"
-                    placeholder="4"
-                    InputProps={{
-                        disableUnderline: true,
-                    }}
-                    className={styles.input}
-                />
+                <TextField type="number" placeholder="De 1 a 8 jogadores" />
             </Box>
-            <Button className={styles.createButton}>Criar Sala</Button>
+            <Button primary="true" sx={{ width: '19.75rem' }}>
+                Criar Sala
+            </Button>
         </Box>
     );
 };

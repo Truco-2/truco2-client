@@ -10,9 +10,12 @@ export default defineConfig({
   })],
   resolve: {
     alias: {
-      components: `${path.resolve(__dirname, "./src/components/")}`,
-      assets: `${path.resolve(__dirname, "./src/assets/")}`,
+      components: path.resolve(__dirname, "./src/components/"),
+      assets: path.resolve(__dirname, "./src/assets/"),
       pages: path.resolve(__dirname, "./src/pages"),
+      types: path.resolve(__dirname, "./src/types"),
+      helpers: path.resolve(__dirname, "./src/helpers"),
+      routes: path.resolve(__dirname, "./src/routes"),
     },
   },
   server: {
