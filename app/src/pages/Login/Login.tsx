@@ -1,31 +1,70 @@
 import React from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import styles from './Login.module.scss';
 
-import {
-    Box,
-    Button,
-    Container,
-    TextField,
-    Typography,
-    styled,
-} from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 
 import Logo from 'assets/Logo.tsx';
+
+import { IGuestResponse, ILoginData } from 'types/Login.ts';
+
+import axios from 'axios';
+
+import { jwtDecode } from 'jwt-decode';
+
+import { setCookies } from 'helpers/cookies.ts';
+
+import { TextField } from 'components/ui/TextField';
+import { Button } from 'components/ui/Button';
 
 interface IBaseButton {
     primary: boolean;
 }
 
-const BaseButton = styled(Button)(({ primary }: IBaseButton) => ({
-    paddingBlock: '0.625rem',
-    backgroundColor: primary ? '#DC8230' : '#FFFFFF',
-    color: primary ? '#FFFFFF' : '#000000',
-    fontWeight: 500,
-    textTransform: 'none',
-}));
+const loginSchema = z.object({
+    email: z.string(),
+    password: z.string(),
+});
+
+const LOGIN_URL = 'https://api.devel.truco2.com/guest';
 
 const Login: React.FC = () => {
+    const { register, handleSubmit } = useForm<ILoginData>({
+        resolver: zodResolver(loginSchema),
+    });
+
+    const navigate = useNavigate();
+
+    const handleLogin = (data: ILoginData) => {
+        console.log('data: ', data);
+
+        console.log('submit');
+    };
+
+    const handleGuest = async () => {
+        const response = await axios.get(LOGIN_URL);
+
+        if (response.status === 200) {
+            const jwtData: IGuestResponse = response.data;
+
+            console.log('jwt: ', jwtData);
+
+            const decoded = jwtDecode(jwtData.access_token);
+
+            console.log('decoded: ', decoded);
+
+            setCookies('userToken', jwtData.access_token, decoded.exp ?? 0);
+
+            navigate('/');
+        }
+    };
+
     return (
         <Box className={styles.container}>
             <Container component="main" maxWidth="lg">
@@ -35,51 +74,74 @@ const Login: React.FC = () => {
 
                         <Logo height={'287px'} width={'242px'} />
                     </Box>
-                    <Box className={styles.formBox}>
-                        <Typography variant="h1">Entrar</Typography>
-
-                        <Typography>
-                            Cadastre-se agora e tenha acesso a conteúdos
-                            exclusivos!
-                        </Typography>
-
-                        <Box className={styles.textFieldBox}>
-                            <Box>
-                                <Typography className={styles.emailLabel}>
-                                    Email
-                                </Typography>
-
-                                <TextField fullWidth />
-                            </Box>
-
-                            <TextField fullWidth />
-                        </Box>
-
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '0.75rem',
-                            }}
+                    <Box>
+                        <form
+                            className={styles.formBox}
+                            onSubmit={handleSubmit(handleLogin)}
                         >
+                            <Typography variant="h1">Entrar</Typography>
+
                             <Typography>
-                                Esqueceu a senha? Resete a senha
+                                Cadastre-se agora e tenha acesso a conteúdos
+                                exclusivos!
                             </Typography>
 
-                            <BaseButton primary fullWidth>
-                                Entrar
-                            </BaseButton>
-                        </Box>
+                            <Box className={styles.textFieldBox}>
+                                <Box>
+                                    <Typography className={styles.emailLabel}>
+                                        Email
+                                    </Typography>
 
-                        <Typography>
-                            Ao entrar concorda com termos de servicos
-                        </Typography>
+                                    <TextField
+                                        placeholder="name@email.com"
+                                        {...register('email')}
+                                        fullWidth
+                                    />
+                                </Box>
+                                <Box>
+                                    <Typography className={styles.emailLabel}>
+                                        Senha
+                                    </Typography>
 
-                        {/* Divider */}
+                                    <TextField
+                                        placeholder="********"
+                                        type="password"
+                                        {...register('password')}
+                                        fullWidth
+                                    />
+                                </Box>
+                            </Box>
 
-                        <BaseButton primary={false} fullWidth>
-                            Entrar como convidado
-                        </BaseButton>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '0.75rem',
+                                }}
+                            >
+                                <Typography>
+                                    Esqueceu a senha? Resete a senha
+                                </Typography>
+
+                                <Button type="submit" primary="true" fullWidth>
+                                    Entrar
+                                </Button>
+                            </Box>
+
+                            <Typography>
+                                Ao entrar concorda com termos de servicos
+                            </Typography>
+
+                            {/* Divider */}
+
+                            <Button
+                                onClick={handleGuest}
+                                primary="false"
+                                fullWidth
+                            >
+                                Entrar como convidado
+                            </Button>
+                        </form>
                     </Box>
                 </Box>
             </Container>

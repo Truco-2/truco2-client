@@ -10,6 +10,9 @@
       "components/*": ["src/components/*"],
       "assets/*": ["src/assets/*"],
       "pages/*": ["src/pages/*"],
+      "types/*": ["src/types/*"],
+      "helpers/*": ["src/helpers/*"],
+      "routes/*": ["src/routes/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

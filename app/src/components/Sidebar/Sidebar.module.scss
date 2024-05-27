@@ -1,16 +1,30 @@
 .sidebarContainer {
     min-height: 100vh;
     box-shadow: 4px 0px 12px 0px #00000026;
-    .titleContainer {
+
+    .header {
         display: flex;
-        align-items: center;
-        justify-content: flex-start;
+        flex-direction: column;
         gap: 1rem;
         padding: 1rem;
+        
+        .titleContainer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         .title {
             color: #dc8230;
             font-size: 24px;
             font-weight: 700;
+        }
+        
+        .subtitle {
+            @extend .title;
+
+            font-size: 16px;
+            // word-break: break-all;
         }
     }
 
