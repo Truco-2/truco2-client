@@ -11,7 +11,7 @@ import {
     styled,
 } from '@mui/material';
 
-import Logo from '../../assets/Logo.tsx';
+import Logo from 'assets/Logo.tsx';
 
 interface IBaseButton {
     primary: boolean;
@@ -33,7 +33,7 @@ const Login: React.FC = () => {
                     <Box className={styles.logoBox}>
                         <Typography variant="h1">TRUCO 2</Typography>
 
-                        <Logo height={287} width={242} />
+                        <Logo height={'287px'} width={'242px'} />
                     </Box>
                     <Box className={styles.formBox}>
                         <Typography variant="h1">Entrar</Typography>

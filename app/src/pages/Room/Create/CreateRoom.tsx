@@ -21,6 +21,7 @@ const CreateRoom: React.FC = () => {
                     InputProps={{
                         disableUnderline: true,
                     }}
+                    placeholder="Nome da Sala"
                     className={styles.input}
                 />
             </Box>
@@ -33,6 +34,7 @@ const CreateRoom: React.FC = () => {
                     InputProps={{
                         disableUnderline: true,
                     }}
+                    placeholder="Modo de Sala"
                     className={styles.input}
                 />
             </Box>
@@ -42,6 +44,8 @@ const CreateRoom: React.FC = () => {
                 </Typography>
                 <StyledTextField
                     variant="standard"
+                    type="number"
+                    placeholder="4"
                     InputProps={{
                         disableUnderline: true,
                     }}

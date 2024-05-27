@@ -1,0 +1,57 @@
+.sidebarContainer {
+    min-height: 100vh;
+    box-shadow: 4px 0px 12px 0px #00000026;
+    .titleContainer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        .title {
+            color: #dc8230;
+            font-size: 24px;
+            font-weight: 700;
+        }
+    }
+
+    .sidebarListContainer {
+        min-width: 15rem;
+        .list {
+            .listItem {
+                .listItemButton,
+                .selectedListItemButton {
+                    position: relative;
+                    .listItemIcon {
+                        svg {
+                            path {
+                                fill: #838286;
+                            }
+                        }
+                    }
+                    .selectedListItemIcon {
+                        svg {
+                            path {
+                                fill: #dc8230;
+                            }
+                        }
+                    }
+                    .listItemText {
+                        color: #838286;
+                    }
+                    .selectedListItemText {
+                        color: #dc8230;
+                    }
+                }
+
+                .selectedListItemButton::after {
+                    content: '';
+                    width: 0.2rem;
+                    height: 2rem;
+                    position: absolute;
+                    right: 0;
+                    background-color: #dc8230;
+                }
+            }
+        }
+    }
+}
