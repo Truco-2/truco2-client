@@ -15,7 +15,7 @@
         }
 
         .title {
-            color: #dc8230;
+            color: var(--primary-color);
             font-size: 24px;
             font-weight: 700;
         }
@@ -45,7 +45,7 @@
                     .selectedListItemIcon {
                         svg {
                             path {
-                                fill: #dc8230;
+                                fill: var(--primary-color);
                             }
                         }
                     }
@@ -53,7 +53,7 @@
                         color: #838286;
                     }
                     .selectedListItemText {
-                        color: #dc8230;
+                        color: var(--primary-color);
                     }
                 }
 
@@ -63,7 +63,7 @@
                     height: 2rem;
                     position: absolute;
                     right: 0;
-                    background-color: #dc8230;
+                    background-color: var(--primary-color);
                 }
             }
         }

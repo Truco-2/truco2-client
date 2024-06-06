@@ -1,10 +1,10 @@
 import { Button as MUIButton, styled } from '@mui/material';
 
-interface StyledButtonProps {
+interface ButtonProps {
     primary?: string;
 }
 
-export const Button = styled(MUIButton)(({ primary }: StyledButtonProps) => ({
+export const Button = styled(MUIButton)<ButtonProps>(({ primary }) => ({
     fontWeight: 700,
     textTransform: 'none',
     paddingBlock: '9.5px',
@@ -20,12 +20,17 @@ export const Button = styled(MUIButton)(({ primary }: StyledButtonProps) => ({
     },
 }));
 
-export const ActionButton = styled(MUIButton)({
+interface ActionButtonProps {
+    buttoncolor: string;
+}
+
+export const ActionButton = styled(MUIButton)<ActionButtonProps>(({buttoncolor}) => ({
     fontWeight: 700,
     textTransform: 'none',
     fontSize: '1.5rem',
-    backgroundColor: '#dc8230',
-    color: '#000000',
+    backgroundColor: 'transparent',
+    color: buttoncolor,
+    border: `2px solid ${buttoncolor}`,
     width: '25rem',
     height: '14.5rem',
     borderRadius: '70px',
@@ -33,12 +38,8 @@ export const ActionButton = styled(MUIButton)({
     flexDirection: 'column',
     gap: '0.5rem',
 
-    '&:hover': {
-        backgroundColor: '#dc8230',
-    },
-
     svg: {
         width: '6.625rem',
         height: '7.312rem',
     },
-});
+}));
