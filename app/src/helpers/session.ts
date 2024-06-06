@@ -1,22 +1,26 @@
-import { getCookies} from './cookies'
+import { getCookies } from './cookies';
 
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 interface IJWTData {
-   "username": string,
-    "sub": number,
-    "iat": number,
-    "exp": number
+    username: string;
+    sub: number;
+    iat: number;
+    exp: number;
 }
 
-export const userInformations = (): IJWTData => {
+export const getUserToken = () => {
     const userToken = getCookies('userToken');
 
     console.log('userToken: ', userToken);
 
-    const decode: IJWTData = jwtDecode(userToken);
+    return userToken;
+};
+
+export const userInformations = (): IJWTData => {
+    const decode: IJWTData = jwtDecode(getUserToken());
 
     console.log('decode: ', decode);
-    
+
     return decode;
-}
+};
