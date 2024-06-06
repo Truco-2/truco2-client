@@ -4,7 +4,7 @@ services:
         build:
             context: ./app
         restart: unless-stopped
-        command: sh -c "npm ci && npm run build && npm run server"
+        command: sh -c "npm ci && npm run build:staging && npm run server"
         container_name: truco2-client-app-staging
         volumes:
             - ./app:/app/
