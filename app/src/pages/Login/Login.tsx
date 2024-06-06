@@ -19,6 +19,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 import { setCookies } from 'helpers/cookies.ts';
+import { API_ROOT_PATH, GUEST_LOGIN_PATH } from 'helpers/apiHelper';
 
 import { TextField } from 'components/ui/TextField';
 import { Button } from 'components/ui/Button';
@@ -27,8 +28,6 @@ const loginSchema = z.object({
     email: z.string(),
     password: z.string(),
 });
-
-const LOGIN_URL = 'https://api.devel.truco2.com/guest';
 
 const Login: React.FC = () => {
     const { register, handleSubmit } = useForm<ILoginData>({
@@ -44,7 +43,7 @@ const Login: React.FC = () => {
     };
 
     const handleGuest = async () => {
-        const response = await axios.get(LOGIN_URL);
+        const response = await axios.get(`${API_ROOT_PATH}/${GUEST_LOGIN_PATH}`);
 
         if (response.status === 200) {
             const jwtData: IGuestResponse = response.data;
