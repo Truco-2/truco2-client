@@ -9,7 +9,7 @@ const Root: React.FC = () => {
     return (
         <MainContainer>
             <Sidebar />
-            <Container maxWidth="xl" sx={{ marginTop: '1%' }}>
+            <Container maxWidth="xl" sx={{ marginTop: '1%'}}>
                 <Outlet />
             </Container>
         </MainContainer>
