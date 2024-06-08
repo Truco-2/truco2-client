@@ -1,14 +1,14 @@
 import React from 'react';
 
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-} from '@mui/material';
+import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+
 import { IRoomList } from 'types/Room';
+
+import {
+    StyledTableCell,
+    StyledTableContainer,
+    StyledTableRow,
+} from 'components/ui/Table';
 
 interface IRoomListTableProps {
     rooms: IRoomList[];
@@ -18,32 +18,38 @@ const RoomListTable: React.FC<IRoomListTableProps> = ({ rooms }) => {
     console.log(rooms);
 
     return (
-        <TableContainer>
+        <StyledTableContainer>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Nome da Sala</TableCell>
-                        <TableCell>Status</TableCell>
-                        <TableCell>Vagas</TableCell>
-                        <TableCell>Pessoas em Sala</TableCell>
+                        <StyledTableCell align="center">
+                            Nome da Sala
+                        </StyledTableCell>
+                        <StyledTableCell align="center">Status</StyledTableCell>
+                        <StyledTableCell align="center">Vagas</StyledTableCell>
+                        <StyledTableCell align="center">
+                            Pessoas em Sala
+                        </StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rooms.map((room, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{room.name}</TableCell>
-                            <TableCell>
+                        <StyledTableRow key={index}>
+                            <StyledTableCell>{room.name}</StyledTableCell>
+                            <StyledTableCell align="center">
                                 {room.isPrivate ? 'Publico' : 'Privado'}
-                            </TableCell>
-                            <TableCell>
+                            </StyledTableCell>
+                            <StyledTableCell align="center">
                                 {room.maxPlayers - room.UsersRooms.length}
-                            </TableCell>
-                            <TableCell>{room.UsersRooms.length}</TableCell>
-                        </TableRow>
+                            </StyledTableCell>
+                            <StyledTableCell align="center">
+                                {room.UsersRooms.length}
+                            </StyledTableCell>
+                        </StyledTableRow>
                     ))}
                 </TableBody>
             </Table>
-        </TableContainer>
+        </StyledTableContainer>
     );
 };
 

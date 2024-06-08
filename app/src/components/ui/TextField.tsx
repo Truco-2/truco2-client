@@ -34,3 +34,15 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         );
     }
 );
+
+export const FilterTextField = styled(TextField)({
+    background: '#FFFFFF33',
+    // textDecoration: 'none',
+    borderRadius: '0.5rem',
+    fontWeight: 700,
+    // display: 'flex',
+
+    div: {
+        width: '100%',
+    },
+});
