@@ -6,18 +6,23 @@ import styles from './Home.module.scss';
 
 import EnterRoomIcon from 'assets/EnterRoomIcon.svg';
 
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, InputAdornment, Typography } from '@mui/material';
 
-import { ActionButton } from 'components/ui/Button';
-
-import { Add } from '@mui/icons-material';
 import RoomListTable from 'components/Table/RoomListTable/RoomListTable';
+import { ActionButton } from 'components/ui/Button';
+import { FilterTextField, TextField } from 'components/ui/TextField';
+
+import { AccountCircle, Add, Search } from '@mui/icons-material';
+
 import { IRoomList } from 'types/Room';
+
 import { axiosInstance } from 'helpers/axiosHelper';
 import { LIST_ROOM_PATH } from 'helpers/apiHelper';
 
 const Home: React.FC = () => {
     const [rooms, setRooms] = useState<IRoomList[]>([]);
+
+    const navigate = useNavigate();
 
     const getRooms = useCallback(async () => {
         const { data, status } = await axiosInstance.get(LIST_ROOM_PATH);
@@ -36,8 +41,6 @@ const Home: React.FC = () => {
     useEffect(() => {
         console.log('rooms: ', rooms);
     }, [rooms]);
-
-    const navigate = useNavigate();
 
     return (
         <Box className={styles.container}>
@@ -63,9 +66,16 @@ const Home: React.FC = () => {
 
             <Typography className={styles.title}>Salas</Typography>
 
-            <TextField />
+            <FilterTextField
+                sx={{ width: '35%' }}
+                placeholder="Pesquisar sala"
+            />
 
-            {rooms.length > 0 ? <RoomListTable rooms={rooms} /> : null}
+            {rooms.length > 0 ? (
+                <Box sx={{ width: '70%' }}>
+                    <RoomListTable rooms={rooms} />
+                </Box>
+            ) : null}
         </Box>
     );
 };

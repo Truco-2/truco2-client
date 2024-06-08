@@ -11,7 +11,6 @@ import Login from 'pages/Login/Login';
 import Home from 'pages/Home/Home';
 import Root from 'routes/root';
 import CreateRoom from 'pages/Room/Create/CreateRoom';
-// import { router } from 'routes/route.ts';
 
 const router = createBrowserRouter([
     {

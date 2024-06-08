@@ -24,22 +24,25 @@ interface ActionButtonProps {
     buttoncolor: string;
 }
 
-export const ActionButton = styled(MUIButton)<ActionButtonProps>(({buttoncolor}) => ({
-    fontWeight: 700,
-    textTransform: 'none',
-    fontSize: '1.5rem',
-    backgroundColor: 'transparent',
-    color: buttoncolor,
-    border: `2px solid ${buttoncolor}`,
-    width: '25rem',
-    height: '14.5rem',
-    borderRadius: '70px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
+export const ActionButton = styled(MUIButton)<ActionButtonProps>(
+    ({ buttoncolor }) => ({
+        fontWeight: 700,
+        textTransform: 'none',
+        fontSize: '1.5rem',
+        backgroundColor: 'transparent',
+        color: buttoncolor,
+        border: `2px solid ${buttoncolor}`,
+        width: '17rem',
+        height: '10rem',
+        padding: '1rem',
+        borderRadius: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
 
-    svg: {
-        width: '6.625rem',
-        height: '7.312rem',
-    },
-}));
+        svg: {
+            width: '4.125rem',
+            height: '4.125rem',
+        },
+    })
+);
