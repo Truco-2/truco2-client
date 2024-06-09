@@ -43,7 +43,9 @@ const Login: React.FC = () => {
     };
 
     const handleGuest = async () => {
-        const response = await axios.get(`${API_ROOT_PATH}/${GUEST_LOGIN_PATH}`);
+        const response = await axios.get(
+            `${API_ROOT_PATH}/${GUEST_LOGIN_PATH}`
+        );
 
         if (response.status === 200) {
             const jwtData: IGuestResponse = response.data;

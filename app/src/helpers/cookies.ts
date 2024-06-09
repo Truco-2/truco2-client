@@ -4,14 +4,18 @@ const cookies = new Cookies();
 
 export const setCookies = (name: string, content: string, exp: number) => {
     cookies.set(name, content, {
-        expires: new Date(exp * 1000)
-    })
-}
+        expires: new Date(exp * 1000),
+    });
+
+    console.log('cookie setado');
+};
 
 export const getCookies = (name: string) => {
+    console.log('getting cookie', name);
+
     return cookies.get(name);
-}
+};
 
 export const cleanCookies = (name: string) => {
     cookies.remove(name);
-}
+};
