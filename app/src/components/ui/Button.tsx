@@ -46,3 +46,18 @@ export const ActionButton = styled(MUIButton)<ActionButtonProps>(
         },
     })
 );
+
+interface FormButtonProps {
+    width?: string;
+}
+
+export const FormButton = styled(MUIButton)<FormButtonProps>(
+    ({ width = '100%' }) => ({
+        fontWeight: 700,
+        color: 'var(--primary-color)',
+        border: '2px solid var(--primary-color)',
+        borderRadius: '0.5rem',
+        textTransform: 'none',
+        width,
+    })
+);

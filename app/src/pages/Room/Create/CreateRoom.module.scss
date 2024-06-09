@@ -29,26 +29,6 @@
             font-weight: 500;
         }
     }
-
-    .createButton {
-        margin-top: 1rem;
-        color: #fff;
-        width: 20rem;
-        height: 2.8rem;
-        font-weight: 500;
-        background: transparent;
-        cursor: pointer;
-        display: inline-block;
-        border: none;
-        font-size: 1rem;
-        background-color: var(--primary-color);
-        box-shadow: 0 0 10px var(--primary-color);
-
-        &:hover {
-            background-color: var(--primary-color);
-            box-shadow: 0 0 5px var(--primary-color), 0 0 15px var(--primary-color);
-        }
-    }
 }
 
 input::-webkit-inner-spin-button {
