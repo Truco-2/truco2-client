@@ -11,6 +11,7 @@ import Login from 'pages/Login/Login';
 import Home from 'pages/Home/Home';
 import Root from 'routes/root';
 import CreateRoom from 'pages/Room/Create/CreateRoom';
+import JoinRoom from 'pages/Room/Join/JoinRoom';
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
                             {
                                 path: 'create',
                                 element: <CreateRoom />,
+                            },
+                            {
+                                path: 'join',
+                                element: <JoinRoom />,
                             },
                         ],
                     },
