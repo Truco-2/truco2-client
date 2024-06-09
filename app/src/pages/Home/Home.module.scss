@@ -1,4 +1,4 @@
-.container {
+.homeDesktopContainer {
     display: flex;
     flex-direction: column;
     gap: 3rem;
@@ -11,5 +11,34 @@
     .buttonsBox {
         display: flex;
         gap: 4rem;
+    }
+}
+
+.homeMobileContainer {
+    overflow: hidden;
+    background: #4e4e4e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .content {
+        padding: 38px 45px;
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        .title {
+            font-size: 32px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .buttonsBox {
+            display: flex;
+            gap: 2rem;
+            flex-direction: column;
+            button {
+                height: 1rem;
+            }
+        }
     }
 }
