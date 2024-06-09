@@ -14,7 +14,6 @@
       "helpers/*": ["src/helpers/*"],
       "routes/*": ["src/routes/*"],
       "services/*": ["src/services/*"],
-      "hooks/*": ["src/hooks/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

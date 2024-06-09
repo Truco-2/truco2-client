@@ -8,9 +8,9 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { setCookies } from 'helpers/cookies.ts';
 import { API_ROOT_PATH, GUEST_LOGIN_PATH } from 'helpers/apiHelper';
-import useIsMobile from 'hooks/UseIsMobile.ts';
 import LoginDesktop from './LoginDesktop';
 import LoginMobile from './LoginMobile';
+import { useMediaQuery } from '@mui/material';
 
 const loginSchema = z.object({
     email: z.string(),
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
         resolver: zodResolver(loginSchema),
     });
 
-    const { isMobile } = useIsMobile();
+    const isMobile = useMediaQuery('(max-width:800px)');
 
     const navigate = useNavigate();
 
