@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IRoomList } from 'types/Room';
 import { getRooms } from 'services/Room';
-import useIsMobile from 'hooks/UseIsMobile';
 import HomeDesktop from './HomeDestktop';
 import HomeMobile from './HomeMobile';
+import { useMediaQuery } from '@mui/material';
 
 const Home: React.FC = () => {
     const [rooms, setRooms] = useState<IRoomList[]>([]);
 
     const navigate = useNavigate();
 
-    const { isMobile } = useIsMobile();
+    const isMobile = useMediaQuery('(max-width:800px)');
 
     useEffect(() => {
         getRooms(({ status, data }) => {
