@@ -35,3 +35,7 @@ interface IRoomListUsersRooms {
     assignedAt: Date;
     user: IRoomListOwner;
 }
+
+export interface IJoinRoomData {
+    code: string;
+}
