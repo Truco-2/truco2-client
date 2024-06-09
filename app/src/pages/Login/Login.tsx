@@ -1,20 +1,13 @@
 import React from 'react';
-
 import { useNavigate } from 'react-router-dom';
-
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { IGuestResponse, ILoginData } from 'types/Login.ts';
-
 import axios from 'axios';
-
 import { jwtDecode } from 'jwt-decode';
-
 import { setCookies } from 'helpers/cookies.ts';
 import { API_ROOT_PATH, GUEST_LOGIN_PATH } from 'helpers/apiHelper';
-
 import useIsMobile from 'hooks/UseIsMobile.ts';
 import LoginDesktop from './LoginDesktop';
 import LoginMobile from './LoginMobile';
