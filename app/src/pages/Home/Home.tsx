@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -6,36 +6,31 @@ import styles from './Home.module.scss';
 
 import EnterRoomIcon from 'assets/EnterRoomIcon.svg';
 
-import { Box, InputAdornment, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import RoomListTable from 'components/Table/RoomListTable/RoomListTable';
 import { ActionButton } from 'components/ui/Button';
-import { FilterTextField, TextField } from 'components/ui/TextField';
+import { FilterTextField } from 'components/ui/TextField';
 
-import { AccountCircle, Add, Search } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 
 import { IRoomList } from 'types/Room';
 
-import { axiosInstance } from 'helpers/axiosHelper';
-import { LIST_ROOM_PATH } from 'helpers/apiHelper';
+import { getRooms } from 'services/Room';
 
 const Home: React.FC = () => {
     const [rooms, setRooms] = useState<IRoomList[]>([]);
 
     const navigate = useNavigate();
 
-    const getRooms = useCallback(async () => {
-        const { data, status } = await axiosInstance.get(LIST_ROOM_PATH);
-
-        if (status === 200) {
-            setRooms(data.data);
-        } else {
-            setRooms([]);
-        }
-    }, []);
-
     useEffect(() => {
-        getRooms();
+        getRooms(({ status, data }) => {
+            if (status === 200) {
+                setRooms(data.data);
+            } else {
+                setRooms([]);
+            }
+        });
     }, []);
 
     useEffect(() => {

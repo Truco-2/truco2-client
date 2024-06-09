@@ -13,6 +13,7 @@
       "types/*": ["src/types/*"],
       "helpers/*": ["src/helpers/*"],
       "routes/*": ["src/routes/*"],
+      "services/*": ["src/services/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

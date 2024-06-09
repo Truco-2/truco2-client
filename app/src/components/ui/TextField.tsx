@@ -20,6 +20,10 @@ const StyledTextField = styled(MUITextField)({
     input: {
         color: '#ffffff',
     },
+
+    div: {
+        width: '100%',
+    },
 });
 
 export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
