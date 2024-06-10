@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import styles from './ViewRoom.module.scss';
 
 import { Box, Typography } from '@mui/material';
 
+import PlayerListTable from 'components/Table/PlayerListTable/PlayerListTable';
 import { FormButton } from 'components/ui/Button';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { joinRoom } from 'services/Room';
+import { informationRoom, joinRoom } from 'services/Room';
+
+import { IRoomList } from 'types/Room';
+
+import useSocket from 'hooks/useSocket';
 
 const ViewRoom: React.FC = () => {
+    const [roomInformations, setRoomInformations] = useState<IRoomList>();
+
     const { code } = useParams();
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log('code: ', code);
-    }, [code]);
+    const { socket } = useSocket();
 
     const handleJoinRoom = () => {
         joinRoom(
@@ -30,10 +35,40 @@ const ViewRoom: React.FC = () => {
         );
     };
 
+    const getRoomInformations = useCallback((code: string) => {
+        informationRoom((response) => {
+            if (response.status === 200) {
+                const data = response.data.data;
+
+                setRoomInformations(data);
+            }
+        }, code);
+    }, []);
+
+    useEffect(() => {
+        if (code) {
+            getRoomInformations(code);
+        }
+    }, [code]);
+
+    useEffect(() => {
+        socket.emit('enter-available-room-listing');
+
+        socket.on('available-rooms-list-msg', () => {
+            getRoomInformations(code ?? '');
+        });
+
+        socket.on('error', () => {
+            console.log('error');
+        });
+    }, [socket, code]);
+
     return (
         <Box className={styles.container}>
             <Box className={styles.playersListContainer}>
-                <h1 className={styles.title}>PLAYERS LIST TABLE</h1>
+                {roomInformations && (
+                    <PlayerListTable room={roomInformations} />
+                )}
             </Box>
 
             <Box className={styles.joinRoomContainer}>

@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 
 import {
     CREATE_ROOM_PATH,
+    INFORMATION_ROOM_PATH,
     JOIN_ROOM_PATH,
     LIST_ROOM_PATH,
 } from 'helpers/apiHelper';
@@ -40,6 +41,21 @@ export const createRoom = (callback: ICallback, data: ICreateRoomData) => {
 export const joinRoom = (callback: ICallback, data: IJoinRoomData) => {
     axiosInstance
         .post(JOIN_ROOM_PATH, data)
+        .then((response) => {
+            callback(response);
+        })
+        .catch((response) => {
+            callback(response.error);
+        });
+};
+
+export const informationRoom = (callback: ICallback, code: string) => {
+    axiosInstance
+        .get(INFORMATION_ROOM_PATH, {
+            params: {
+                code,
+            },
+        })
         .then((response) => {
             callback(response);
         })
