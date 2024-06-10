@@ -45,6 +45,8 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                 const data = response.data.data;
 
                 setRoomInformations(data);
+            } else {
+                navigate('/home');
             }
         }, code);
     }, []);

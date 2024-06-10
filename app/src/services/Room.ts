@@ -23,7 +23,7 @@ export const getRooms = (callback: ICallback) => {
             callback(response);
         })
         .catch((response) => {
-            callback(response.error);
+            callback(response);
         });
 };
 
@@ -34,7 +34,7 @@ export const createRoom = (callback: ICallback, data: ICreateRoomData) => {
             callback(response);
         })
         .catch((response) => {
-            callback(response.error);
+            callback(response);
         });
 };
 
@@ -45,7 +45,7 @@ export const joinRoom = (callback: ICallback, data: IJoinRoomData) => {
             callback(response);
         })
         .catch((response) => {
-            callback(response.error);
+            callback(response);
         });
 };
 
@@ -60,6 +60,6 @@ export const informationRoom = (callback: ICallback, code: string) => {
             callback(response);
         })
         .catch((response) => {
-            callback(response.error);
+            callback(response);
         });
 };
