@@ -18,6 +18,7 @@ import Home from 'pages/Home/Home';
 import CreateRoom from 'pages/Room/Create/CreateRoom';
 import JoinRoom from 'pages/Room/Join/JoinRoom';
 import ViewRoom from 'pages/Room/View/ViewRoom';
+import Room from 'pages/Room/Room';
 
 const router = createBrowserRouter([
     {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
                             {
                                 path: 'view/:code',
                                 element: <ViewRoom />,
+                            },
+                            {
+                                path: ':code',
+                                element: <Room />,
                             },
                         ],
                     },
