@@ -30,7 +30,7 @@ const ViewRoom: React.FC = () => {
     return (
         <Box className={styles.container}>
             <Box className={styles.playersListContainer}>
-                <h1>PLAYERS LIST TABLE</h1>
+                <h1 className={styles.title}>PLAYERS LIST TABLE</h1>
             </Box>
 
             <Box className={styles.joinRoomContainer}>
