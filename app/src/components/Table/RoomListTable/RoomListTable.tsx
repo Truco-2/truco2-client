@@ -10,12 +10,18 @@ import {
     StyledTableRow,
 } from 'components/ui/Table';
 
+import { useNavigate } from 'react-router-dom';
+
 interface IRoomListTableProps {
     rooms: IRoomList[];
 }
 
 const RoomListTable: React.FC<IRoomListTableProps> = ({ rooms }) => {
-    console.log(rooms);
+    const navigate = useNavigate();
+
+    const handleTableRowClick = (code: string) => {
+        navigate(`/room/view/${code}`);
+    };
 
     return (
         <StyledTableContainer>
@@ -34,7 +40,10 @@ const RoomListTable: React.FC<IRoomListTableProps> = ({ rooms }) => {
                 </TableHead>
                 <TableBody>
                     {rooms.map((room, index) => (
-                        <StyledTableRow key={index}>
+                        <StyledTableRow
+                            onClick={() => handleTableRowClick(room.code)}
+                            key={index}
+                        >
                             <StyledTableCell>{room.name}</StyledTableCell>
                             <StyledTableCell align="center">
                                 {room.isPrivate ? 'Privado' : 'Publico'}
