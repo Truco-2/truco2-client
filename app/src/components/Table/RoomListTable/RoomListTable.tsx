@@ -37,7 +37,7 @@ const RoomListTable: React.FC<IRoomListTableProps> = ({ rooms }) => {
                         <StyledTableRow key={index}>
                             <StyledTableCell>{room.name}</StyledTableCell>
                             <StyledTableCell align="center">
-                                {room.isPrivate ? 'Publico' : 'Privado'}
+                                {room.isPrivate ? 'Privado' : 'Publico'}
                             </StyledTableCell>
                             <StyledTableCell align="center">
                                 {room.maxPlayers - room.UsersRooms.length}

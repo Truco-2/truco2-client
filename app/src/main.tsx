@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import './index.css';
+
 import {
     RouterProvider,
     Navigate,
     createBrowserRouter,
 } from 'react-router-dom';
+
 import ProtectedRoute from 'components/ProtectedRoute/ProtectedRoute';
+
+import Root from 'routes/root';
+
 import Login from 'pages/Login/Login';
 import Home from 'pages/Home/Home';
-import Root from 'routes/root';
 import CreateRoom from 'pages/Room/Create/CreateRoom';
 import JoinRoom from 'pages/Room/Join/JoinRoom';
+import ViewRoom from 'pages/Room/View/ViewRoom';
 
 const router = createBrowserRouter([
     {
@@ -44,6 +50,10 @@ const router = createBrowserRouter([
                             {
                                 path: 'join',
                                 element: <JoinRoom />,
+                            },
+                            {
+                                path: 'view/:code',
+                                element: <ViewRoom />,
                             },
                         ],
                     },

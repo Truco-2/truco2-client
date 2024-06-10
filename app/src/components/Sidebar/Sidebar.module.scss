@@ -1,6 +1,7 @@
 .sidebarContainer {
     min-height: 100vh;
-    box-shadow: 4px 0px 12px 0px #00000026;
+    background-color: #0F090C8F;
+    border-right: 0.5px solid var(--primary-color);
 
     .header {
         display: flex;
@@ -55,15 +56,6 @@
                     .selectedListItemText {
                         color: var(--primary-color);
                     }
-                }
-
-                .selectedListItemButton::after {
-                    content: '';
-                    width: 0.2rem;
-                    height: 2rem;
-                    position: absolute;
-                    right: 0;
-                    background-color: var(--primary-color);
                 }
             }
         }
