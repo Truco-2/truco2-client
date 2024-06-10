@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { CREATE_ROOM_PATH, LIST_ROOM_PATH } from 'helpers/apiHelper';
+import { CREATE_ROOM_PATH, JOIN_ROOM_PATH, LIST_ROOM_PATH } from 'helpers/apiHelper';
 import { axiosInstance } from 'helpers/axiosHelper';
 
 import { ICreateRoomData } from 'types/Room';
@@ -32,3 +32,18 @@ export const createRoom = (callback: ICallback, data: ICreateRoomData) => {
             callback(response.error);
         });
 };
+
+export const joinRoom = (callback: ICallback, code: string) => {
+    axiosInstance
+        .post(JOIN_ROOM_PATH, false , {
+            params: {
+                code
+            }
+        })
+        .then((response) => {
+            callback(response);
+        })
+        .catch((response) => {
+            callback(response.error);
+        });
+}
