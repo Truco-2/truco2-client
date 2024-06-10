@@ -9,7 +9,14 @@
     height: 60vh;
 
     .playersListContainer {
-        
+        display: flex;
+        align-items: center;
+
+        .title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
     }
 
     .joinRoomContainer {

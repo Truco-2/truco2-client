@@ -4,9 +4,9 @@ import styles from './CreateRoom.module.scss';
 
 import { Box, FormControlLabel, Typography } from '@mui/material';
 
-import { Button } from 'components/ui/Button';
 import { TextField } from 'components/ui/TextField';
 import { StyledSwitch } from 'components/ui/Switch';
+import { FormButton } from 'components/ui/Button';
 
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -95,9 +95,9 @@ const CreateRoom: React.FC = () => {
                 </Box>
             )}
 
-            <Button type="submit" primary="true" sx={{ width: '19.75rem' }}>
+            <FormButton type="submit" width="19.75rem">
                 Criar Sala
-            </Button>
+            </FormButton>
         </form>
     );
 };
