@@ -15,7 +15,7 @@ const Root: React.FC = () => {
             ) : (
                 <MainContainer>
                     <Sidebar />
-                    <Container maxWidth="xl" sx={{ marginTop: '1%' }}>
+                    <Container maxWidth="xl" sx={{ marginBlock: '1%' }}>
                         <Outlet />
                     </Container>
                 </MainContainer>

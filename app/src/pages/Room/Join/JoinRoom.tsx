@@ -13,6 +13,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { IJoinRoomData } from 'types/Room';
 
+import { useNavigate } from 'react-router-dom';
+
 const joinRoomSchema = z.object({
     code: z.string().length(6),
 });
@@ -22,8 +24,10 @@ const JoinRoom: React.FC = () => {
         resolver: zodResolver(joinRoomSchema),
     });
 
+    const navigate = useNavigate();
+
     const handleJoinRoom = (data: IJoinRoomData) => {
-        console.log('data: ', data);
+        navigate(`/room/view/${data.code}`);
     };
 
     return (
