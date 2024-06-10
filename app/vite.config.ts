@@ -20,6 +20,7 @@ export default defineConfig({
             helpers: path.resolve(__dirname, './src/helpers'),
             routes: path.resolve(__dirname, './src/routes'),
             services: path.resolve(__dirname, './src/services'),
+            hooks: path.resolve(__dirname, './src/hooks'),
         },
     },
     server: {

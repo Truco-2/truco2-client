@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 const roomSchema = z.object({
     name: z.string(),
-    maxPlayers: z.string().transform((x) => Number(x)),
+    maxPlayers: z.coerce.number().gte(2).lte(7),
     isPrivate: z.boolean(),
     password: z.string().optional(),
 });
@@ -37,8 +37,10 @@ const CreateRoom: React.FC = () => {
         console.log('create room data: ', data);
 
         createRoom((response) => {
+            const code = response.data.data.code;
+
             if (response.status === 201) {
-                navigate('/home');
+                navigate(`/room/${code}`);
             }
         }, data);
     };
@@ -64,7 +66,7 @@ const CreateRoom: React.FC = () => {
                 <TextField
                     {...register('maxPlayers')}
                     type="number"
-                    placeholder="De 1 a 8 jogadores"
+                    placeholder="De 2 a 7 jogadores"
                 />
             </Box>
             <Box className={styles.inputContainer}>

@@ -2,7 +2,7 @@
     background: #0C0709;
     border-top: 1px solid;
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 5rem 12.5rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -29,8 +29,4 @@
             font-weight: 500;
         }
     }
-}
-
-input::-webkit-inner-spin-button {
-    display: none;
 }

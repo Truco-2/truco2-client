@@ -20,11 +20,14 @@ const ViewRoom: React.FC = () => {
     }, [code]);
 
     const handleJoinRoom = () => {
-        joinRoom((response) => {
-            if (response.status === 201) {
-                navigate(`/room/${code}`);
-            }
-        }, code ?? '');
+        joinRoom(
+            (response) => {
+                if (response.status === 201) {
+                    navigate(`/room/${code}`);
+                }
+            },
+            { code: code ?? '' }
+        );
     };
 
     return (
