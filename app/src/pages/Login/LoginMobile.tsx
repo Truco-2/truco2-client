@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { ILoginScreen } from 'types/Login';
 import styles from './Login.module.scss';
-import HeaderMobile from 'components/ui/HeaderMobile';
+import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import { Button } from 'components/ui/Button';
 import { TextField } from 'components/ui/TextField';
 

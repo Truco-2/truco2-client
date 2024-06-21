@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import HeaderMobile from 'components/ui/HeaderMobile';
+import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import React from 'react';
 import styles from './Home.module.scss';
 import { IHomeScreen } from 'types/Home';

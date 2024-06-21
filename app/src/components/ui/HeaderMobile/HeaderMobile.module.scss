@@ -1,0 +1,28 @@
+.list {
+    .listItem {
+        .listItemButton,
+        .selectedListItemButton {
+            position: relative;
+            .listItemIcon {
+                svg {
+                    path {
+                        fill: #838286;
+                    }
+                }
+            }
+            .selectedListItemIcon {
+                svg {
+                    path {
+                        fill: var(--primary-color);
+                    }
+                }
+            }
+            .listItemText {
+                color: #838286;
+            }
+            .selectedListItemText {
+                color: var(--primary-color);
+            }
+        }
+    }
+}
