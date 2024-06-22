@@ -1,3 +1,5 @@
+import { UseFormHandleSubmit, UseFormRegister, UseFormWatch } from "react-hook-form";
+
 export interface ICreateRoomData {
     name: string;
     maxPlayers: number;
@@ -26,4 +28,11 @@ interface IRoomListUsersRooms {
 
 export interface IJoinRoomData {
     code: string;
+}
+
+export interface ICreateRoomScreen {
+    handleSubmit: UseFormHandleSubmit<ICreateRoomData, undefined>;
+    handleCreateRoom: (data: ICreateRoomData) => void;
+    register: UseFormRegister<ICreateRoomData>;
+    watch:  UseFormWatch<ICreateRoomData>;
 }

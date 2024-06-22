@@ -2,7 +2,12 @@ import React from 'react';
 
 import styles from './CreateRoom.module.scss';
 
-import { Box, FormControlLabel, Typography } from '@mui/material';
+import {
+    Box,
+    FormControlLabel,
+    Typography,
+    useMediaQuery,
+} from '@mui/material';
 
 import { TextField } from 'components/ui/TextField';
 import { StyledSwitch } from 'components/ui/Switch';
@@ -15,6 +20,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ICreateRoomData } from 'types/Room';
 import { createRoom } from 'services/Room';
 import { useNavigate } from 'react-router-dom';
+import CreateRoomMobile from './CreateRoomMobile';
+import CreateRoomDesktop from './CreateRoomDesktop';
 
 const roomSchema = z.object({
     name: z.string(),
@@ -24,6 +31,8 @@ const roomSchema = z.object({
 });
 
 const CreateRoom: React.FC = () => {
+    const isMobile = useMediaQuery('(max-width:800px)');
+
     const { register, handleSubmit, watch } = useForm<ICreateRoomData>({
         resolver: zodResolver(roomSchema),
         defaultValues: {
@@ -34,8 +43,6 @@ const CreateRoom: React.FC = () => {
     const navigate = useNavigate();
 
     const handleCreateRoom = (data: ICreateRoomData) => {
-        console.log('create room data: ', data);
-
         createRoom((response) => {
             const code = response.data.data.code;
 
@@ -46,61 +53,23 @@ const CreateRoom: React.FC = () => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit(handleCreateRoom)}
-            className={styles.createRoomContainer}
-        >
-            <Typography className={styles.title}>Criar Sala</Typography>
-            <Typography className={styles.description}>
-                Crie a sala que você irá jogar
-            </Typography>
-            <Box className={styles.inputContainer}>
-                <Typography className={styles.inputLabel}>Nome</Typography>
-
-                <TextField {...register('name')} placeholder="Nome da Sala" />
-            </Box>
-            <Box className={styles.inputContainer}>
-                <Typography className={styles.inputLabel}>
-                    Limite de jogadores
-                </Typography>
-                <TextField
-                    {...register('maxPlayers')}
-                    type="number"
-                    placeholder="De 2 a 7 jogadores"
+        <>
+            {isMobile ? (
+                <CreateRoomMobile
+                    handleSubmit={handleSubmit}
+                    handleCreateRoom={handleCreateRoom}
+                    register={register}
+                    watch={watch}
                 />
-            </Box>
-            <Box className={styles.inputContainer}>
-                <Typography className={styles.inputLabel}>
-                    Modo de sala
-                </Typography>
-
-                <FormControlLabel
-                    control={
-                        <StyledSwitch
-                            {...register('isPrivate')}
-                            color="warning"
-                        />
-                    }
-                    componentsProps={{
-                        typography: {
-                            color: 'var(--secondary-color)',
-                        },
-                    }}
-                    label={watch('isPrivate') ? 'Privado' : 'Público'}
+            ) : (
+                <CreateRoomDesktop
+                    handleSubmit={handleSubmit}
+                    handleCreateRoom={handleCreateRoom}
+                    register={register}
+                    watch={watch}
                 />
-            </Box>
-
-            {watch('isPrivate') && (
-                <Box className={styles.inputContainer}>
-                    <Typography className={styles.inputLabel}>Senha</Typography>
-                    <TextField {...register('password')} type="password" />
-                </Box>
             )}
-
-            <FormButton type="submit" width="19.75rem">
-                Criar Sala
-            </FormButton>
-        </form>
+        </>
     );
 };
 
