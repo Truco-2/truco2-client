@@ -31,11 +31,26 @@ const StyledBoxContainer = styled(Box)({
     gap: '1rem',
 });
 
-const StyledAccordion = styled(Accordion)({
-    background: '#000000',
-    border: 'solid #FE6B01 1px',
-    position: 'relative',
-});
+const StyledAccordion = styled(Accordion)(
+    ({ expanded }: { expanded: boolean }) => ({
+        background: '#000000',
+        border: 'solid #FE6B01 1px !important',
+        position: 'absolute',
+        zIndex: '20',
+        width: 'calc(100% - 2px)',
+        ':after': expanded
+            ? {
+                  content: '""',
+                  width: '100%',
+                  marginTop: '2px',
+                  height: '100vh',
+                  backdropFilter: 'blur(2px)',
+                  position: 'absolute',
+                  zIndex: '1',
+              }
+            : '',
+    })
+);
 
 const StyledBox = styled(Box)({
     height: '4rem',
@@ -49,6 +64,7 @@ const StyledIconButton = styled(IconButton)(
     ({ expanded }: { expanded: boolean }) => ({
         background: '#000000 !important',
         border: '1px solid #FE6B01',
+        zIndex: '2',
         transform: expanded ? 'rotate(180deg)' : '',
         position: expanded ? 'absolute' : 'inherit',
         bottom: expanded ? '-1rem' : '',

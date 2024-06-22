@@ -15,8 +15,6 @@ interface ICallback {
 }
 
 export const getRooms = (callback: ICallback) => {
-    console.log('chamando axios instance');
-
     axiosInstance
         .get(LIST_ROOM_PATH)
         .then((response) => {
