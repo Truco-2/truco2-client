@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import styles from './Room.module.scss';
-
-import { Box, Typography } from '@mui/material';
-
-import PlayerListTable from 'components/Table/PlayerListTable/PlayerListTable';
-import { FormButton } from 'components/ui/Button';
+import { useMediaQuery } from '@mui/material';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -14,8 +9,9 @@ import { exitRoom, informationRoom, joinRoom } from 'services/Room';
 import { IRoomList } from 'types/Room';
 
 import useSocket from 'hooks/useSocket';
-import { TextField } from 'components/ui/TextField';
 import { createMatch } from 'services/Match';
+import RoomMobile from './RoomMobile';
+import RoomDesktop from './RoomDesktop';
 
 interface IRoomProps {
     view?: boolean;
@@ -40,6 +36,7 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
 
         setPassword(value);
     };
+    const isMobile = useMediaQuery('(max-width:800px)');
 
     const handleJoinRoom = () => {
         joinRoom(
@@ -110,68 +107,31 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
     }, [socket, code, getRoomInformations, navigate]);
 
     return (
-        <Box className={styles.container}>
-            <Box className={styles.playersListContainer}>
-                {roomInformations && (
-                    <PlayerListTable room={roomInformations} />
-                )}
-            </Box>
-
-            {view ? (
-                <Box className={styles.joinRoomContainer}>
-                    <Typography className={styles.title}>
-                        Jogadores em sala
-                    </Typography>
-
-                    <Typography className={styles.text}>
-                        Os jogadores listados estao na sala do jogo
-                    </Typography>
-
-                    {roomInformations?.isPrivate && (
-                        <Box className={styles.inputContainer}>
-                            <Typography className={styles.inputLabel}>
-                                Senha
-                            </Typography>
-                            <TextField
-                                value={password}
-                                onChange={handlePass}
-                                type="password"
-                                fullWidth
-                            />
-                        </Box>
-                    )}
-
-                    <FormButton width="15.5rem" onClick={handleJoinRoom}>
-                        Entrar na sala
-                    </FormButton>
-                </Box>
+        <>
+            {isMobile ? (
+                <RoomMobile
+                    roomInformations={roomInformations}
+                    view={view}
+                    handleJoinRoom={handleJoinRoom}
+                    password={password}
+                    handleInitMatch={handleInitMatch}
+                    isOwner={isOwner}
+                    handlePass={handlePass}
+                    handleLeaveRoom={handleLeaveRoom}
+                />
             ) : (
-                <Box className={styles.joinRoomContainer}>
-                    <Typography className={styles.title}>
-                        {isOwner ? 'Esperando Líder' : 'Iniciar jogo'}
-                    </Typography>
-
-                    <Typography className={styles.text}>
-                        Os jogadores listados estao na sala do jogo
-                    </Typography>
-
-                    <Box className={styles.buttonsBox}>
-                        {isOwner && (
-                            <FormButton
-                                width="15.5rem"
-                                onClick={handleInitMatch}
-                            >
-                                Iniciar o jogo
-                            </FormButton>
-                        )}
-
-                        <FormButton width="15.5rem" onClick={handleLeaveRoom}>
-                            Sair da sala
-                        </FormButton>
-                    </Box>
-                </Box>
+                <RoomDesktop
+                    roomInformations={roomInformations}
+                    view={view}
+                    handleJoinRoom={handleJoinRoom}
+                    password={password}
+                    handleInitMatch={handleInitMatch}
+                    isOwner={isOwner}
+                    handlePass={handlePass}
+                    handleLeaveRoom={handleLeaveRoom}
+                />
             )}
-        </Box>
+        </>
     );
 };
 
