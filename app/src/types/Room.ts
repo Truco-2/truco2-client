@@ -36,3 +36,9 @@ export interface ICreateRoomScreen {
     register: UseFormRegister<ICreateRoomData>;
     watch:  UseFormWatch<ICreateRoomData>;
 }
+
+export interface IJoinRoomScreen {
+    handleSubmit: UseFormHandleSubmit<IJoinRoomData, undefined>
+    handleJoinRoom:(data: IJoinRoomData) => void
+    register:  UseFormRegister<IJoinRoomData>
+}

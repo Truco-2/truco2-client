@@ -1,10 +1,10 @@
-.container {
+.containerDesktop {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 
     padding: 5rem 12.5rem;
-    background-color: #0C0709;
+    background-color: #0c0709;
     border-radius: 1.25rem;
 
     height: 60vh;
@@ -20,9 +20,73 @@
         flex-direction: column;
         gap: 0.5rem;
 
+        .codeInput {
+            width: 50%;
+        }
+
         p {
             font-weight: 500;
             color: var(--primary-color);
+        }
+    }
+}
+
+.mobileContainer {
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    position: relative;
+
+    .img {
+        width: 100vw;
+        height: 100vh;
+        background-image: url('assets/mobileBackground.png');
+        background-position: right center;
+        filter: blur(3px);
+        -webkit-filter: blur(3px);
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        z-index: -1;
+
+        &::after {
+            content: '';
+            width: 100vw;
+            height: 100vh;
+            background-color: hsla(0, 0%, 0%, 0.7);
+            position: absolute;
+            z-index: 3;
+        }
+    }
+
+    .containerMobile {
+        display: flex;
+        flex-direction: column;
+        margin-top: 4rem;
+        gap: 1.5rem;
+        padding: 2.5rem;
+
+        .title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .textFieldContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .codeInput {
+                width: 14rem;
+            }
+
+            p {
+                font-weight: 500;
+                color: var(--primary-color);
+            }
         }
     }
 }
