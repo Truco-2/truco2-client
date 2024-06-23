@@ -1,25 +1,20 @@
 import React from 'react';
-
-import styles from './JoinRoom.module.scss';
-
-import { Box, Typography } from '@mui/material';
-
-import { TextField } from 'components/ui/TextField';
-import { FormButton } from 'components/ui/Button';
-
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { IJoinRoomData } from 'types/Room';
-
 import { useNavigate } from 'react-router-dom';
+import JoinRoomDesktop from './JoinRoomDesktop';
+import { useMediaQuery } from '@mui/material';
+import JoinRoomMobile from './JoinRoomMobile';
 
 const joinRoomSchema = z.object({
     code: z.string().length(6),
 });
 
 const JoinRoom: React.FC = () => {
+    const isMobile = useMediaQuery('(max-width:800px)');
+
     const { register, handleSubmit } = useForm<IJoinRoomData>({
         resolver: zodResolver(joinRoomSchema),
     });
@@ -31,26 +26,21 @@ const JoinRoom: React.FC = () => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit(handleJoinRoom)}
-            className={styles.container}
-        >
-            <Typography className={styles.title}>Entrar em sala</Typography>
-
-            <Box className={styles.textFieldContainer}>
-                <Typography>Código para entrar em sala</Typography>
-
-                <TextField
-                    sx={{ width: '50%' }}
-                    {...register('code')}
-                    placeholder="Código"
+        <>
+            {isMobile ? (
+                <JoinRoomMobile
+                    handleSubmit={handleSubmit}
+                    handleJoinRoom={handleJoinRoom}
+                    register={register}
                 />
-            </Box>
-
-            <FormButton width="15rem" type="submit">
-                Entrar na sala
-            </FormButton>
-        </form>
+            ) : (
+                <JoinRoomDesktop
+                    handleSubmit={handleSubmit}
+                    handleJoinRoom={handleJoinRoom}
+                    register={register}
+                />
+            )}
+        </>
     );
 };
 

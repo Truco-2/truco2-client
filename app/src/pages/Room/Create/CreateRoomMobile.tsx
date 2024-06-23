@@ -15,7 +15,7 @@ const CreateRoomMobile: React.FC<ICreateRoomScreen> = ({
 }) => {
     return (
         <Box className={styles.mobileContainer}>
-            <HeaderMobile key="header" />
+            <HeaderMobile />
             <div className={styles.img} />
             <form
                 onSubmit={handleSubmit(handleCreateRoom)}
