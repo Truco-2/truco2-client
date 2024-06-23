@@ -1,9 +1,9 @@
-.container {
+.containerDesktop {
     display: flex;
     justify-content: space-between;
 
     padding: 6rem 7rem;
-    background-color: #0C0709;
+    background-color: #0c0709;
     border-radius: 1.25rem;
 
     height: 60vh;
@@ -20,7 +20,7 @@
         }
     }
 
-    .joinRoomContainer {
+    .roomContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -34,7 +34,7 @@
 
         .text {
             font-weight: 400;
-            color: #FFFFFFB2;
+            color: #ffffffb2;
         }
 
         .inputContainer {
@@ -53,6 +53,73 @@
             display: flex;
             flex-direction: column;
             gap: 1rem;
+        }
+    }
+}
+
+.mobileContainer {
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    position: relative;
+
+    .img {
+        width: 100vw;
+        height: 100vh;
+        background-color: #0c0709;
+        position: absolute;
+        z-index: -1;
+
+        &::after {
+            content: '';
+            width: 100vw;
+            height: 100vh;
+            background-color: hsla(0, 0%, 0%, 0.7);
+            position: absolute;
+            z-index: 3;
+        }
+    }
+
+    .containerMobile {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4rem;
+        padding: 2.5rem;
+        border-radius: 1.25rem;
+
+        height: 60vh;
+
+        .roomContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            width: 100%;
+
+            .title {
+                font-size: 2.5rem;
+                color: var(--primary-color);
+                font-weight: 600;
+            }
+
+            .playersListContainer {
+                display: flex;
+                align-items: center;
+                width: 100%;
+
+                .title {
+                    font-size: 2.5rem;
+                    color: var(--primary-color);
+                    font-weight: 600;
+                }
+            }
+
+            .text {
+                font-weight: 400;
+                color: #ffffffb2;
+            }
         }
     }
 }

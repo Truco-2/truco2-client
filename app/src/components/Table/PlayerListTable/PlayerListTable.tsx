@@ -20,7 +20,7 @@ interface IPlayerListTableProps {
 }
 
 export const StyledTableContainer = styled(TableContainer)({
-    borderRadius: '2.625rem',
+    borderRadius: '0.4rem 0.4rem 0 0 ',
 });
 
 export const StyledTableRow = styled(TableRow)({

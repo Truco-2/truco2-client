@@ -42,3 +42,14 @@ export interface IJoinRoomScreen {
     handleJoinRoom:(data: IJoinRoomData) => void
     register:  UseFormRegister<IJoinRoomData>
 }
+
+export interface IRoomScreen {
+    roomInformations: IRoomList | undefined;
+    view: boolean;
+    handleJoinRoom: () => void;
+    password: string;
+    handleInitMatch: () => void;
+    isOwner: boolean;
+    handlePass: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    handleLeaveRoom: () => void;
+}
