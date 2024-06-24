@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 
 import {
     CREATE_ROOM_PATH,
+    EXIT_ROOM_PATH,
     INFORMATION_ROOM_PATH,
     JOIN_ROOM_PATH,
     LIST_ROOM_PATH,
@@ -54,6 +55,17 @@ export const informationRoom = (callback: ICallback, code: string) => {
                 code,
             },
         })
+        .then((response) => {
+            callback(response);
+        })
+        .catch((response) => {
+            callback(response);
+        });
+};
+
+export const exitRoom = (callback: ICallback) => {
+    axiosInstance
+        .post(EXIT_ROOM_PATH)
         .then((response) => {
             callback(response);
         })

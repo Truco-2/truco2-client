@@ -9,7 +9,7 @@ import { FormButton } from 'components/ui/Button';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { informationRoom, joinRoom } from 'services/Room';
+import { exitRoom, informationRoom, joinRoom } from 'services/Room';
 
 import { IRoomList } from 'types/Room';
 
@@ -45,23 +45,34 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
         console.log('Iniciando jogo');
     };
 
-    const getRoomInformations = useCallback((code: string) => {
-        informationRoom((response) => {
-            if (response.status === 200) {
-                const data = response.data.data;
-
-                setRoomInformations(data);
-            } else {
-                navigate('/home');
+    const handleLeaveRoom = () => {
+        exitRoom((response) => {
+            if (response.status === 201) {
+                navigate('/');
             }
-        }, code);
-    }, []);
+        });
+    };
+
+    const getRoomInformations = useCallback(
+        (code: string) => {
+            informationRoom((response) => {
+                if (response.status === 200) {
+                    const data = response.data.data;
+
+                    setRoomInformations(data);
+                } else {
+                    navigate('/home');
+                }
+            }, code);
+        },
+        [navigate]
+    );
 
     useEffect(() => {
         if (code) {
             getRoomInformations(code);
         }
-    }, [code]);
+    }, [code, getRoomInformations]);
 
     useEffect(() => {
         if (socket?.connected) {
@@ -71,7 +82,7 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                 getRoomInformations(code ?? '');
             });
         }
-    }, [socket, code]);
+    }, [socket, code, getRoomInformations]);
 
     return (
         <Box className={styles.container}>
@@ -115,7 +126,7 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                             </FormButton>
                         )}
 
-                        <FormButton width="15.5rem" onClick={handleInitMatch}>
+                        <FormButton width="15.5rem" onClick={handleLeaveRoom}>
                             Sair da sala
                         </FormButton>
                     </Box>
