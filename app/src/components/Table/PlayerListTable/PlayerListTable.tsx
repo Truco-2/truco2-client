@@ -54,7 +54,7 @@ const PlayerListTable: React.FC<IPlayerListTableProps> = ({ room }) => {
                     </StyledTableRow>
                 </TableHead>
                 <TableBody>
-                    {room.UsersRooms.map((user, index) => (
+                    {room.usersRooms.map((user, index) => (
                         <StyledTableRow key={index}>
                             <StyledTableCell align="center">
                                 <Logo height="20" width="20" />
