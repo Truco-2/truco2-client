@@ -15,6 +15,7 @@
       "routes/*": ["src/routes/*"],
       "services/*": ["src/services/*"],
       "hooks/*": ["src/hooks/*"],
+      "contexts/*": ["src/contexts/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

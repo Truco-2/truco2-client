@@ -1,36 +1,11 @@
-import { useEffect } from 'react';
+import { useContext } from "react";
 
-import { API_ROOT_PATH } from 'helpers/apiHelper';
-
-import { io } from 'socket.io-client';
-
-import { getUserToken } from 'helpers/session';
-
-const socket = io(`${API_ROOT_PATH}/room`, {
-    reconnection: false,
-    extraHeaders: {
-        authorization: getUserToken(),
-    },
-});
+import { SocketContext } from "contexts/SocketContext";
 
 const useSocket = () => {
-    useEffect(() => {
-        socket.connect();
+    const data = useContext(SocketContext);
 
-        socket.on('connect', () => {
-            console.log('conected');
-        });
-
-        socket.on('disconnect', () => {
-            console.log('disconected');
-        });
-
-        return () => {
-            socket.disconnect();
-        };
-    }, []);
-
-    return { socket };
+    return data;
 };
 
 export default useSocket;
