@@ -13,17 +13,16 @@ export interface IRoomList {
     code: string;
     isPrivate: boolean;
     maxPlayers: number;
-    owner: IRoomListOwner;
-    UsersRooms: IRoomListUsersRooms[];
-}
-
-interface IRoomListOwner {
-    id: number;
-    name: string;
+    usersRooms: IRoomListUsersRooms[];
 }
 
 interface IRoomListUsersRooms {
-    user: IRoomListOwner;
+    user: IRoomListUser;
+}
+
+interface IRoomListUser {
+    id: number;
+    name: string;
 }
 
 export interface IJoinRoomData {

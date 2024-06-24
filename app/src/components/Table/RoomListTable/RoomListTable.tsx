@@ -49,10 +49,10 @@ const RoomListTable: React.FC<IRoomListTableProps> = ({ rooms }) => {
                                 {room.isPrivate ? 'Privado' : 'Publico'}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {room.maxPlayers - room.UsersRooms.length}
+                                {room.maxPlayers - room.usersRooms.length}
                             </StyledTableCell>
                             <StyledTableCell align="center">
-                                {room.UsersRooms.length}
+                                {room.usersRooms.length}
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}
