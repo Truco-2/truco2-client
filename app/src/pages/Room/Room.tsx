@@ -14,6 +14,7 @@ import { exitRoom, informationRoom, joinRoom } from 'services/Room';
 import { IRoomList } from 'types/Room';
 
 import useSocket from 'hooks/useSocket';
+import { TextField } from 'components/ui/TextField';
 
 interface IRoomProps {
     view?: boolean;
@@ -21,6 +22,7 @@ interface IRoomProps {
 
 const Room: React.FC<IRoomProps> = ({ view = false }) => {
     const [roomInformations, setRoomInformations] = useState<IRoomList>();
+    const [password, setPassword] = useState<string>('');
 
     const { code } = useParams();
 
@@ -30,6 +32,14 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
 
     const isOwner = true;
 
+    const handlePass = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        const value = e.target.value;
+
+        setPassword(value);
+    };
+
     const handleJoinRoom = () => {
         joinRoom(
             (response) => {
@@ -37,7 +47,7 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                     navigate(`/room/${code}`);
                 }
             },
-            { code: code ?? '' }
+            { code: code ?? '', password }
         );
     };
 
@@ -79,6 +89,8 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
             socket.emit('enter-available-room-listing');
 
             socket.on('available-rooms-list-msg', () => {
+                console.log('here');
+
                 getRoomInformations(code ?? '');
             });
         }
@@ -101,6 +113,20 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                     <Typography className={styles.text}>
                         Os jogadores listados estao na sala do jogo
                     </Typography>
+
+                    {roomInformations?.isPrivate && (
+                        <Box className={styles.inputContainer}>
+                            <Typography className={styles.inputLabel}>
+                                Senha
+                            </Typography>
+                            <TextField
+                                value={password}
+                                onChange={handlePass}
+                                type="password"
+                                fullWidth
+                            />
+                        </Box>
+                    )}
 
                     <FormButton width="15.5rem" onClick={handleJoinRoom}>
                         Entrar na sala

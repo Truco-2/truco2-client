@@ -46,6 +46,8 @@ const CreateRoom: React.FC = () => {
         createRoom((response) => {
             const code = response.data.data.code;
 
+            console.log('code: ', code);
+
             if (response.status === 201) {
                 navigate(`/room/${code}`);
             }

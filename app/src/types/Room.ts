@@ -27,6 +27,7 @@ interface IRoomListUser {
 
 export interface IJoinRoomData {
     code: string;
+    password?: string;
 }
 
 export interface ICreateRoomScreen {
