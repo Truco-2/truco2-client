@@ -5,11 +5,17 @@ import styles from './Room.module.scss';
 import PlayerListTable from 'components/Table/PlayerListTable/PlayerListTable';
 import { FormButton } from 'components/ui/Button';
 import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
+import { TextField } from 'components/ui/TextField';
 
 const RoomMobile: React.FC<IRoomScreen> = ({
     handleJoinRoom,
     roomInformations,
     view,
+    handleInitMatch,
+    handleLeaveRoom,
+    handlePass,
+    isOwner,
+    password,
 }) => {
     return (
         <Box className={styles.mobileContainer}>
@@ -35,13 +41,48 @@ const RoomMobile: React.FC<IRoomScreen> = ({
                             )}
                         </Box>
 
-                        {view && (
-                            <FormButton
-                                width="15.5rem"
-                                onClick={handleJoinRoom}
-                            >
-                                Entrar na sala
-                            </FormButton>
+                        {view ? (
+                            <>
+                                {roomInformations?.isPrivate && (
+                                    <Box className={styles.inputContainer}>
+                                        <Typography
+                                            className={styles.inputLabel}
+                                        >
+                                            Senha
+                                        </Typography>
+                                        <TextField
+                                            value={password}
+                                            onChange={handlePass}
+                                            type="password"
+                                            fullWidth
+                                        />
+                                    </Box>
+                                )}
+                                <FormButton
+                                    width="15.5rem"
+                                    onClick={handleJoinRoom}
+                                >
+                                    Entrar na sala
+                                </FormButton>
+                            </>
+                        ) : (
+                            <Box className={styles.buttonsBox}>
+                                {isOwner && (
+                                    <FormButton
+                                        width="15.5rem"
+                                        onClick={handleInitMatch}
+                                    >
+                                        Iniciar o jogo
+                                    </FormButton>
+                                )}
+
+                                <FormButton
+                                    width="15.5rem"
+                                    onClick={() => handleLeaveRoom()}
+                                >
+                                    Sair da sala
+                                </FormButton>
+                            </Box>
                         )}
                     </>
                 </Box>
