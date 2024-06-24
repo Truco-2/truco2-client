@@ -30,11 +30,14 @@ const Home: React.FC = () => {
         getRoomsList();
     }, [getRoomsList]);
 
-    const handleSocketRoom = (payload: string) => {
-        getRoomsList();
+    const handleSocketRoom = useCallback(
+        (payload: string) => {
+            getRoomsList();
 
-        console.log('payload: ', payload);
-    };
+            console.log('payload: ', payload);
+        },
+        [getRoomsList]
+    );
 
     useEffect(() => {
         if (socket?.connected) {
@@ -42,7 +45,7 @@ const Home: React.FC = () => {
 
             socket.on('available-rooms-list-msg', handleSocketRoom);
         }
-    }, [socket]);
+    }, [socket, handleSocketRoom]);
 
     return (
         <React.Fragment>

@@ -38,7 +38,7 @@ export const StyledTableCell = styled(TableCell)({
         borderRight: '1px solid #FE6B01',
         padding: '1rem 1.5rem',
     },
-    ['&:last-child']: {
+    '&:last-child': {
         borderRight: 'none',
     },
 });
