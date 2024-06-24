@@ -25,7 +25,7 @@ const RoomDesktop: React.FC<IRoomScreen> = ({
             </Box>
 
             {view ? (
-                <Box className={styles.joinRoomContainer}>
+                <Box className={styles.roomContainer}>
                     <Typography className={styles.title}>
                         Jogadores em sala
                     </Typography>
@@ -53,7 +53,7 @@ const RoomDesktop: React.FC<IRoomScreen> = ({
                     </FormButton>
                 </Box>
             ) : (
-                <Box className={styles.joinRoomContainer}>
+                <Box className={styles.roomContainer}>
                     <Typography className={styles.title}>
                         {isOwner ? 'Esperando Líder' : 'Iniciar jogo'}
                     </Typography>
