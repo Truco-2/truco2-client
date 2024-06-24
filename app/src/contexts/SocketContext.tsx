@@ -2,6 +2,7 @@ import React, {
     PropsWithChildren,
     createContext,
     useEffect,
+    useMemo,
     useState,
 } from 'react';
 
@@ -19,12 +20,14 @@ export const SocketContext = createContext({} as ISocketContextProps);
 export const SocketProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [socket, setSocket] = useState<Socket>();
 
-    const client = io(`${API_ROOT_PATH}/room`, {
-        reconnection: false,
-        extraHeaders: {
-            authorization: getUserToken(),
-        },
-    });
+    const client = useMemo(() => {
+        return io(`${API_ROOT_PATH}/room`, {
+            reconnection: false,
+            extraHeaders: {
+                authorization: getUserToken(),
+            },
+        });
+    }, []);
 
     useEffect(() => {
         client.connect();
