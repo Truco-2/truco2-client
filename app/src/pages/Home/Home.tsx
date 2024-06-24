@@ -37,13 +37,11 @@ const Home: React.FC = () => {
     };
 
     useEffect(() => {
-        socket.emit('enter-available-room-listing');
+        if (socket?.connected) {
+            socket.emit('enter-available-room-listing');
 
-        socket.on('available-rooms-list-msg', handleSocketRoom);
-
-        socket.on('error', () => {
-            console.log('error');
-        });
+            socket.on('available-rooms-list-msg', handleSocketRoom);
+        }
     }, [socket]);
 
     return (

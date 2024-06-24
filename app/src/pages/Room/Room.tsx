@@ -58,15 +58,13 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
     }, [code]);
 
     useEffect(() => {
-        socket.emit('enter-available-room-listing');
+        if (socket?.connected) {
+            socket.emit('enter-available-room-listing');
 
-        socket.on('available-rooms-list-msg', () => {
-            getRoomInformations(code ?? '');
-        });
-
-        socket.on('error', () => {
-            console.log('error');
-        });
+            socket.on('available-rooms-list-msg', () => {
+                getRoomInformations(code ?? '');
+            });
+        }
     }, [socket, code]);
 
     return (
