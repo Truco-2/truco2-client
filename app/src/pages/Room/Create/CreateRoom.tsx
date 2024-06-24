@@ -1,17 +1,6 @@
 import React from 'react';
 
-import styles from './CreateRoom.module.scss';
-
-import {
-    Box,
-    FormControlLabel,
-    Typography,
-    useMediaQuery,
-} from '@mui/material';
-
-import { TextField } from 'components/ui/TextField';
-import { StyledSwitch } from 'components/ui/Switch';
-import { FormButton } from 'components/ui/Button';
+import { useMediaQuery } from '@mui/material';
 
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
