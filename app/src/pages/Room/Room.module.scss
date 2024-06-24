@@ -36,5 +36,11 @@
             font-weight: 400;
             color: #FFFFFFB2;
         }
+
+        .buttonsBox {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
     }
 }
