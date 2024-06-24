@@ -20,10 +20,10 @@ import { useNavigate } from 'react-router-dom';
 import { cleanCookies } from 'helpers/cookies';
 import { userInformations } from 'helpers/session';
 
-type options = 'Home' | 'Jogar' | 'Carreira' | 'Perfil';
+type SidebarOptionsType = 'Home' | 'Jogar' | 'Carreira' | 'Perfil';
 
 interface IOptions {
-    text: options;
+    text: SidebarOptionsType;
     icon: ReactElement;
     url: string;
 }
@@ -36,7 +36,8 @@ const options: IOptions[] = [
 ];
 
 const SidebarOptions: React.FC = () => {
-    const [optionSelected, setOptionSelected] = useState<options>('Home');
+    const [optionSelected, setOptionSelected] =
+        useState<SidebarOptionsType>('Home');
 
     const navigate = useNavigate();
 
@@ -122,7 +123,8 @@ const Sidebar: React.FC = () => {
                     Hi {userInformations().username}
                 </Typography>
             </Box>
-            {<SidebarOptions />}
+
+            <SidebarOptions />
         </Box>
     );
 };

@@ -62,11 +62,12 @@ const LoginMobile: React.FC<ILoginScreen> = ({
                         }}
                     >
                         <Typography>
-                            Esqueceu a senha?{' '}
+                            Esqueceu a senha?
                             <a
                                 className={styles.resetPasswordAnchor}
                                 onClick={(e) => e.preventDefault()}
                                 target="_blank"
+                                href="/reset-password"
                             >
                                 Resete a senha
                             </a>
