@@ -15,6 +15,7 @@ import { IRoomList } from 'types/Room';
 
 import useSocket from 'hooks/useSocket';
 import { TextField } from 'components/ui/TextField';
+import { createMatch } from 'services/Match';
 
 interface IRoomProps {
     view?: boolean;
@@ -53,6 +54,14 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
 
     const handleInitMatch = () => {
         console.log('Iniciando jogo');
+
+        createMatch((response) => {
+            if (response.status === 201) {
+                const matchId = '';
+
+                navigate(`/match/${matchId}`);
+            }
+        });
     };
 
     const handleLeaveRoom = () => {
@@ -93,8 +102,12 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
 
                 getRoomInformations(code ?? '');
             });
+
+            socket.on('match-update', (id: string) => {
+                navigate(`/match/${id}`);
+            });
         }
-    }, [socket, code, getRoomInformations]);
+    }, [socket, code, getRoomInformations, navigate]);
 
     return (
         <Box className={styles.container}>
