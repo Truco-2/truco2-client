@@ -28,6 +28,8 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
 
     const { socket } = useSocket();
 
+    const isOwner = true;
+
     const handleJoinRoom = () => {
         joinRoom(
             (response) => {
@@ -37,6 +39,10 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
             },
             { code: code ?? '' }
         );
+    };
+
+    const handleInitMatch = () => {
+        console.log('Iniciando jogo');
     };
 
     const getRoomInformations = useCallback((code: string) => {
@@ -75,7 +81,7 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                 )}
             </Box>
 
-            {view && (
+            {view ? (
                 <Box className={styles.joinRoomContainer}>
                     <Typography className={styles.title}>
                         Jogadores em sala
@@ -88,6 +94,31 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                     <FormButton width="15.5rem" onClick={handleJoinRoom}>
                         Entrar na sala
                     </FormButton>
+                </Box>
+            ) : (
+                <Box className={styles.joinRoomContainer}>
+                    <Typography className={styles.title}>
+                        {isOwner ? 'Esperando Líder' : 'Iniciar jogo'}
+                    </Typography>
+
+                    <Typography className={styles.text}>
+                        Os jogadores listados estao na sala do jogo
+                    </Typography>
+
+                    <Box className={styles.buttonsBox}>
+                        {isOwner && (
+                            <FormButton
+                                width="15.5rem"
+                                onClick={handleInitMatch}
+                            >
+                                Iniciar o jogo
+                            </FormButton>
+                        )}
+
+                        <FormButton width="15.5rem" onClick={handleInitMatch}>
+                            Sair da sala
+                        </FormButton>
+                    </Box>
                 </Box>
             )}
         </Box>
