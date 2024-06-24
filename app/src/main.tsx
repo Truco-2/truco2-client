@@ -18,6 +18,7 @@ import Home from 'pages/Home/Home';
 import CreateRoom from 'pages/Room/Create/CreateRoom';
 import JoinRoom from 'pages/Room/Join/JoinRoom';
 import Room from 'pages/Room/Room';
+import Match from 'pages/Match/Match';
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
                                 element: <Room />,
                             },
                         ],
+                    },
+                    {
+                        path: 'match',
+                        children: [{ path: ':id', element: <Match /> }],
                     },
                 ],
             },
