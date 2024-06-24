@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios';
-
 import {
     CREATE_ROOM_PATH,
     EXIT_ROOM_PATH,
@@ -9,11 +7,8 @@ import {
 } from 'helpers/apiHelper';
 import { axiosInstance } from 'helpers/axiosHelper';
 
+import { ICallback } from 'types/Common';
 import { ICreateRoomData, IJoinRoomData } from 'types/Room';
-
-interface ICallback {
-    (response: AxiosResponse): void;
-}
 
 export const getRooms = (callback: ICallback) => {
     axiosInstance
