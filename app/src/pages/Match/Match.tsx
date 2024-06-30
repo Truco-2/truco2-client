@@ -15,13 +15,19 @@ const Match: React.FC = () => {
 
     const userId = userInformations().sub;
 
+    const handleMatchMsg = (payload: unknown) => {
+        console.log('payload: ', payload);
+    };
+
     useEffect(() => {
         if (socket?.connected) {
             socket.emit('enter', {});
 
-            socket.on('match-msg', (payload) => {
-                console.log('payload: ', payload);
-            });
+            socket.on('match-msg', handleMatchMsg);
+
+            return () => {
+                socket.off('match-msg', handleMatchMsg);
+            };
         }
     }, [socket, id, userId]);
 
