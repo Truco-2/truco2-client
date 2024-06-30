@@ -38,7 +38,7 @@ const Login: React.FC = () => {
         );
 
         if (response.status === 200) {
-            const jwtData: IGuestResponse = response.data;
+            const jwtData: IGuestResponse = response.data.data;
 
             console.log('jwt: ', jwtData);
 

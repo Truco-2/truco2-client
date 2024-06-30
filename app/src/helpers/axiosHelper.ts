@@ -9,8 +9,6 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((req) => {
-    console.log('interceptors');
-
     req.headers.Authorization = `Bearer ${getUserToken()}`;
 
     return req;

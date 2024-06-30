@@ -17,6 +17,10 @@ interface IRoomProps {
     view?: boolean;
 }
 
+interface IMatchStartData {
+    id: number;
+}
+
 const Room: React.FC<IRoomProps> = ({ view = false }) => {
     const [roomInformations, setRoomInformations] = useState<IRoomList>();
     const [password, setPassword] = useState<string>('');
@@ -50,15 +54,11 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
     };
 
     const handleInitMatch = () => {
-        console.log('Iniciando jogo');
-
         createMatch((response) => {
             if (response.status === 201) {
-                const matchId = '';
-
-                navigate(`/match/${matchId}`);
+                console.log('created');
             }
-        });
+        }, code ?? '');
     };
 
     const handleLeaveRoom = () => {
@@ -69,20 +69,18 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
         });
     };
 
-    const getRoomInformations = useCallback(
-        (code: string) => {
-            informationRoom((response) => {
-                if (response.status === 200) {
-                    const data = response.data.data;
+    const getRoomInformations = useCallback((code: string) => {
+        informationRoom((response) => {
+            if (response.status === 200) {
+                const data = response.data.data;
 
-                    setRoomInformations(data);
-                } else {
-                    navigate('/home');
-                }
-            }, code);
-        },
-        [navigate]
-    );
+                setRoomInformations(data);
+            }
+            // else {
+            //     navigate('/home');
+            // }
+        }, code);
+    }, []);
 
     useEffect(() => {
         if (code) {
@@ -90,21 +88,40 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
         }
     }, [code, getRoomInformations]);
 
+    const handleMatchStart = useCallback(
+        (data: IMatchStartData) => {
+            console.log('match start: ', data);
+
+            const matchId = data.id;
+
+            navigate(`/match/${matchId}`);
+        },
+        [navigate]
+    );
+
+    const handleRoomUpdate = (data: IRoomList) => {
+        setRoomInformations(data);
+    };
+
     useEffect(() => {
         if (socket?.connected) {
-            socket.emit('enter-available-room-listing');
+            console.log('subscribe enter-room');
 
-            socket.on('available-rooms-list-msg', () => {
-                console.log('here');
+            if (code) {
+                socket.emit('enter-room', { code });
+            }
 
-                getRoomInformations(code ?? '');
-            });
+            socket.on('room-update', handleRoomUpdate);
 
-            socket.on('match-update', (id: string) => {
-                navigate(`/match/${id}`);
-            });
+            socket.on('match-start', handleMatchStart);
+
+            return () => {
+                socket.off('room-update', handleRoomUpdate);
+
+                socket.off('match-start', handleMatchStart);
+            };
         }
-    }, [socket, code, getRoomInformations, navigate]);
+    }, [socket, code, handleMatchStart]);
 
     return (
         <>

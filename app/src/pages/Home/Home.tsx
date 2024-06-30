@@ -44,6 +44,10 @@ const Home: React.FC = () => {
             socket.emit('enter-available-room-listing');
 
             socket.on('available-rooms-list-msg', handleSocketRoom);
+
+            return () => {
+                socket.off('available-rooms-list-msg', handleSocketRoom);
+            };
         }
     }, [socket, handleSocketRoom]);
 

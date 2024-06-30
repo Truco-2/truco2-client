@@ -15,13 +15,15 @@ interface ISocketContextProps {
     socket: Socket | undefined;
 }
 
-export const SocketContext = createContext({} as ISocketContextProps);
+export const MatchSocketContext = createContext({} as ISocketContextProps);
 
-export const SocketProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export const MatchSocketProvider: React.FC<PropsWithChildren> = ({
+    children,
+}) => {
     const [socket, setSocket] = useState<Socket>();
 
     const client = useMemo(() => {
-        return io(`${API_ROOT_PATH}/room`, {
+        return io(`${API_ROOT_PATH}/match`, {
             reconnection: false,
             extraHeaders: {
                 authorization: getUserToken(),
@@ -54,10 +56,10 @@ export const SocketProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }, [client]);
 
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <MatchSocketContext.Provider value={{ socket }}>
             {children}
-        </SocketContext.Provider>
+        </MatchSocketContext.Provider>
     );
 };
 
-export default SocketProvider;
+export default MatchSocketProvider;

@@ -12,15 +12,11 @@ interface IJWTData {
 export const getUserToken = () => {
     const userToken = getCookies('userToken');
 
-    console.log('userToken: ', userToken);
-
     return userToken;
 };
 
 export const userInformations = (): IJWTData => {
     const decode: IJWTData = jwtDecode(getUserToken());
-
-    console.log('decode: ', decode);
 
     return decode;
 };
