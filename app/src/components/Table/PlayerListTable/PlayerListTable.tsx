@@ -59,7 +59,7 @@ const PlayerListTable: React.FC<IPlayerListTableProps> = ({ room }) => {
                             <StyledTableCell align="center">
                                 <Logo height="20" width="20" />
                             </StyledTableCell>
-                            <StyledTableCell>{user.user.name}</StyledTableCell>
+                            <StyledTableCell>{user.user?.name}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

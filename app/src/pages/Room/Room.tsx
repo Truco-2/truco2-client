@@ -100,6 +100,8 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
     );
 
     const handleRoomUpdate = (data: IRoomList) => {
+        console.log('data: ', data);
+
         setRoomInformations(data);
     };
 
