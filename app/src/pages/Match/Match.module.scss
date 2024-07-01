@@ -1,0 +1,7 @@
+.table {
+    display: grid;
+    grid-template-areas: 
+    '- a -'
+    'a - a'
+    '- a -';
+}
