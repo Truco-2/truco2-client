@@ -62,10 +62,10 @@
     color: #f00 !important;
 }
 .playingCards.fourColours .card.diams {
-    color: #f00 !important;
+    color: #00f !important;
 }
 [lang=de] .playingCards.fourColours .card.diams {
-    color: #f00 !important;
+    color: #f60 !important;
 }
 .playingCards .card.hearts {
     color: #f00 !important;
@@ -74,13 +74,13 @@
     color: #000 !important;
 }
 [lang=de] .playingCards.fourColours .card.spades {
-    color: #000 !important;
+    color: #090 !important;
 }
 .playingCards .card.clubs {
     color: #000 !important;
 }
 .playingCards.fourColours .card.clubs {
-    color: #000 !important;
+    color: #090 !important;
 }
 [lang=de] .playingCards.fourColours .card.clubs {
     color: #000 !important;

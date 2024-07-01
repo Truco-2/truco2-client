@@ -16,6 +16,7 @@
       "services/*": ["src/services/*"],
       "hooks/*": ["src/hooks/*"],
       "contexts/*": ["src/contexts/*"],
+      "game/*": ["src/game/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
