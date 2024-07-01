@@ -129,8 +129,6 @@ const Match: React.FC = () => {
 
     const userId = userInformations().sub;
 
-    const cardsOnTable = matchData?.match.players.map((p) => p.play);
-
     const handleMatchMsg = (payload: IData) => {
         console.log('payload: ', payload);
 
