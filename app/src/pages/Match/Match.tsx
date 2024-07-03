@@ -12,6 +12,7 @@ import { userInformations } from 'helpers/session';
 
 import { useParams } from 'react-router-dom';
 import Card from './Card/Card';
+import { CardSuit } from 'types/Card';
 
 interface IPlayerRequestData {
     counter: number;
@@ -65,16 +66,16 @@ interface IMatchData {
     match: IMatch;
 }
 
-const suitHelper: Record<number, string> = {
-    0: 'diams',
-    1: 'hearts',
-    2: 'spades',
-    3: 'clubs',
+const suitHelper: Record<number, CardSuit> = {
+    0: CardSuit.DIAMS,
+    1: CardSuit.SPADES,
+    2: CardSuit.HEARTS,
+    3: CardSuit.CLUBS,
 };
 
 interface ICardOptions {
     rank: string;
-    suit: string;
+    suit: CardSuit;
 }
 
 const generateCards = () => {
@@ -106,18 +107,6 @@ const generateCards = () => {
 const cardsOptions = generateCards();
 
 console.log(cardsOptions);
-
-// const generateCardSuit = (suit: string) => {
-//     if (suit === 'diams') {
-//         return '&diams;';
-//     } else if (suit === 'hearts') {
-//         return '&hearts;';
-//     } else if (suit === 'spades') {
-//         return '&spades;';
-//     } else {
-//         return '&clubs;';
-//     }
-// };
 
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
