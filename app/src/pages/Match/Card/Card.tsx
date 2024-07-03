@@ -1,10 +1,10 @@
+import { generateCards } from 'helpers/cardHelpers';
 import React from 'react';
 
 import { CardSuit } from 'types/Card';
 
 interface ICardProps {
-    rank: string;
-    suit: CardSuit;
+    card: number;
 }
 
 const renderCardSuit = (suit: CardSuit) => {
@@ -20,7 +20,12 @@ const renderCardSuit = (suit: CardSuit) => {
     }
 };
 
-const Card: React.FC<ICardProps> = ({ rank, suit }) => {
+const cardsOptions = generateCards();
+
+const Card: React.FC<ICardProps> = ({ card }) => {
+    const rank = cardsOptions[card].rank;
+    const suit = cardsOptions[card].suit;
+
     return (
         <div className={`card rank-${rank.toLowerCase()} ${suit}`}>
             <span className="rank">{rank}</span>

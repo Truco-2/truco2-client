@@ -6,36 +6,63 @@ import { Box } from '@mui/material';
 
 import Card from '../Card/Card';
 
-import { generateCards } from 'helpers/cardHelpers';
 import BackCard from '../BackCard/BackCard';
 
 interface IHandProps {
     me: boolean;
     cards: number[];
+    index: number;
+    rotation: number;
+    radius: number;
+    handlePlay?: (cardId: number) => void;
 }
 
-const cardsOptions = generateCards();
+const generateTransform = (
+    index: number,
+    rotation: number,
+    radius: number,
+    me: boolean
+) => {
+    const value = `rotate(${
+        index * rotation
+    }deg) translate(${radius}px) rotate(${me ? '-90deg' : '90deg'})`;
 
-const Hand: React.FC<IHandProps> = ({ me, cards }) => {
+    return value;
+};
+
+const Hand: React.FC<IHandProps> = ({
+    me,
+    cards,
+    index,
+    radius,
+    rotation,
+    handlePlay,
+}) => {
     return (
-        <Box className={styles.hand}>
+        <Box
+            className={styles.hand}
+            sx={{ transform: generateTransform(index, rotation, radius, me) }}
+        >
             {me ? (
                 <ul className="table">
-                    {cards.map((card) => {
-                        const rank = cardsOptions[card].rank;
-                        const suit = cardsOptions[card].suit;
-
-                        return (
-                            <li key={card}>
-                                <Card rank={rank} suit={suit} />
-                            </li>
-                        );
-                    })}
+                    {cards.map((card) => (
+                        <li
+                            onClick={() => handlePlay && handlePlay(card)}
+                            key={card}
+                        >
+                            <Card card={card} />
+                        </li>
+                    ))}
                 </ul>
             ) : (
-                <ul className="hand">
+                <ul
+                    style={{ width: `${100 + cards.length * 4}px` }}
+                    className="hand"
+                >
                     {cards.map((card) => (
-                        <BackCard key={card} />
+                        <li key={card}>
+                            <BackCard />
+                        </li>
                     ))}
                 </ul>
             )}

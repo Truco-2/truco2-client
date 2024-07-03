@@ -12,6 +12,8 @@ import { IMatchData, IPlayerRequestData, ISocketData } from 'types/Match';
 
 import Table from './Table/Table';
 
+import { userInformations } from 'helpers/session';
+
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
     const [count, setCount] = useState<number>(0);
@@ -19,6 +21,8 @@ const Match: React.FC = () => {
     const { socket } = useSocket('match');
 
     const { id } = useParams();
+
+    const userId = userInformations().sub;
 
     const handleMatchMsg = (payload: ISocketData) => {
         console.log('payload: ', payload);
@@ -31,6 +35,18 @@ const Match: React.FC = () => {
             case 'PLAY':
             case 'PLAYER_STATUS': {
                 const data = payload.data as IMatchData;
+
+                const index = data.match.players.findIndex(
+                    (p) => p.id === userId
+                );
+
+                if (index > 0) {
+                    const array = data.match.players.slice(0, index);
+
+                    const newArray = data.match.players.slice(index);
+
+                    data.match.players = [...newArray, ...array];
+                }
 
                 setMatchData(data);
                 break;
@@ -58,20 +74,22 @@ const Match: React.FC = () => {
         }
     }, [socket, id]);
 
-    // const handlePlay = (card: number) => {
-    //     socket?.emit('play', { card });
-    // };
+    const handlePlay = (card: number) => {
+        socket?.emit('play', { card });
+    };
 
     return (
         <Box className={styles.container}>
             <Typography>Sala Do Jogo</Typography>
 
-            <Typography>{count}</Typography>
+            <Typography>Timer: {count}</Typography>
 
             <Box className={styles.tableContainer}>
                 <Table
                     playerCards={matchData?.cards ?? []}
                     players={matchData?.match.players ?? []}
+                    tableCard={matchData?.match.tableCard ?? 0}
+                    handlePlay={handlePlay}
                 />
             </Box>
 

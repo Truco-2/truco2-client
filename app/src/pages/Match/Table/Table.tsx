@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import styles from './Table.module.scss';
 
@@ -9,29 +9,65 @@ import Hand from '../Hand/Hand';
 import { IPlayer } from 'types/Match';
 
 import { userInformations } from 'helpers/session';
+import TableCard from '../TableCard/TableCard';
 
 interface ITableProps {
     players: IPlayer[];
     playerCards: number[];
+    tableCard: number;
+    handlePlay: (cardId: number) => void;
 }
 
 const generateCardArray = (length: number) => {
     return Array.from(Array(length).keys());
 };
 
-const Table: React.FC<ITableProps> = ({ players, playerCards }) => {
+const Table: React.FC<ITableProps> = ({
+    players,
+    playerCards,
+    tableCard,
+    handlePlay,
+}) => {
     const userId = userInformations().sub;
 
-    return (
-        <Box className={`playingCards ${styles.table}`}>
-            {players.map((player) => {
-                const me = player.id === userId;
-                const cards = me
-                    ? generateCardArray(player.cardsOnHand)
-                    : playerCards;
+    const tableRef = useRef<HTMLDivElement>();
 
-                return <Hand cards={cards} me={me} key={player.id} />;
+    return (
+        <Box className={`playingCards ${styles.table}`} ref={tableRef}>
+            {players.map((player, index) => {
+                const me = player.id === userId;
+
+                const cards = me
+                    ? playerCards
+                    : generateCardArray(player.cardsOnHand);
+
+                const cardPlay = player.play?.cardId
+                    ? [player.play.cardId]
+                    : [];
+
+                return (
+                    <React.Fragment key={player.id}>
+                        <Hand
+                            cards={cards}
+                            me={me}
+                            index={index}
+                            radius={(tableRef.current?.offsetWidth ?? 0) / 2.2}
+                            rotation={360 / players.length}
+                            handlePlay={handlePlay}
+                        />
+
+                        <Hand
+                            cards={cardPlay}
+                            me={true}
+                            index={index}
+                            radius={(tableRef.current?.offsetWidth ?? 0) / 3.5}
+                            rotation={360 / players.length}
+                        />
+                    </React.Fragment>
+                );
             })}
+
+            <TableCard card={tableCard} />
         </Box>
     );
 };

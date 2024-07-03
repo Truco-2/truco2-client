@@ -1,11 +1,9 @@
 .table {
     position: relative;
-    width: 15rem;
-    height: 15rem;
-    list-style-type: none;
-    border: 0.5px solid var(--bg);
-    border-radius: 50%;
+    width: 70vh;
+    height: 70vh;
+    // border-radius: 50%;
     display: grid;
     place-items: center;
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
 }
