@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import styles from './Match.module.scss';
 
@@ -9,7 +9,7 @@ import useSocket from 'hooks/useSocket';
 import { useParams } from 'react-router-dom';
 
 import {
-    IBetData,
+    // IBetData,
     IMatchData,
     IPlayerRequestData,
     ISocketData,
@@ -30,62 +30,68 @@ const Match: React.FC = () => {
 
     const userId = userInformations().sub;
 
-    const handleMatchMsg = (payload: ISocketData) => {
-        console.log('payload: ', payload);
+    const handleMatchMsg = useCallback(
+        (payload: ISocketData) => {
+            console.log('payload: ', payload);
 
-        const code = payload.code;
+            const code = payload.code;
 
-        switch (code) {
-            case 'ROUND_START':
-            case 'TURN_START':
-            case 'PLAY':
-            case 'PLAYER_STATUS': {
-                const data = payload.data as IMatchData;
+            switch (code) {
+                case 'ROUND_START':
+                case 'TURN_START':
+                case 'PLAY':
+                case 'PLAYER_STATUS': {
+                    const data = payload.data as IMatchData;
 
-                const index = data.match.players.findIndex(
-                    (p) => p.id === userId
-                );
+                    const index = data.match.players.findIndex(
+                        (p) => p.id === userId
+                    );
 
-                if (index > 0) {
-                    const array = data.match.players.slice(0, index);
+                    if (index > 0) {
+                        const array = data.match.players.slice(0, index);
 
-                    const newArray = data.match.players.slice(index);
+                        const newArray = data.match.players.slice(index);
 
-                    data.match.players = [...newArray, ...array];
+                        data.match.players = [...newArray, ...array];
+                    }
+
+                    setMatchData(data);
+                    break;
                 }
+                case 'BET_REQUEST':
+                case 'MATCH_START_TIMER':
+                case 'PLAY_REQUEST': {
+                    const data = payload.data as IPlayerRequestData;
 
-                setMatchData(data);
-                break;
+                    if (code === 'BET_REQUEST' && data.playerId === userId) {
+                        setOptions(data.options);
+                    } else {
+                        setOptions([]);
+                    }
+
+                    setCount(data.counter);
+                    break;
+                }
+                case 'BET': {
+                    // const data = payload.data as IBetData;
+
+                    // const playerId = data.playerId;
+                    // const bet = data.bet;
+
+                    // const player = matchData?.match.players.find(
+                    //     (player) => player.id === playerId
+                    // );
+
+                    // if (player) {
+                    //     player.bet = bet;
+                    // }
+
+                    break;
+                }
             }
-            case 'BET_REQUEST':
-            case 'MATCH_START_TIMER':
-            case 'PLAY_REQUEST': {
-                const data = payload.data as IPlayerRequestData;
-
-                if (code === 'BET_REQUEST' && data.playerId === userId) {
-                    setOptions(data.options);
-                } else {
-                    setOptions([]);
-                }
-
-                setCount(data.counter);
-                break;
-            }
-            case 'BET':
-                const data = payload.data as IBetData;
-
-                const playerId = data.playerId;
-                const bet = data.bet;
-
-                const player = matchData?.match.players.find(
-                    (player) => player.id === playerId
-                );
-
-                if (player) {
-                    player.bet = bet;
-                }
-        }
-    };
+        },
+        [userId]
+    );
 
     useEffect(() => {
         if (socket?.connected) {
@@ -97,7 +103,7 @@ const Match: React.FC = () => {
                 socket.off('match-msg', handleMatchMsg);
             };
         }
-    }, [socket, id]);
+    }, [socket, id, handleMatchMsg]);
 
     const handlePlay = (card: number) => {
         socket?.emit('play', { card });
@@ -123,96 +129,6 @@ const Match: React.FC = () => {
                     handleBet={handleBet}
                 />
             </Box>
-
-            {/* <Box className={styles.table}>
-                {matchData?.match.players.map((player) => {
-                    const mainPlayer = player.id === userId;
-
-                    return (
-                        <React.Fragment key={player.id}>
-                            <Box
-                                className={`${styles.hand} ${
-                                    mainPlayer
-                                        ? styles.primaryPlayer
-                                        : styles.secondaryPlayer
-                                } `}
-                            >
-                                <ul className="table">
-                                    {mainPlayer ? (
-                                        <>
-                                            {matchData?.cards.map((card) => (
-                                                <li
-                                                    onClick={() =>
-                                                        handlePlay(card)
-                                                    }
-                                                    key={card}
-                                                >
-                                                    <Card
-                                                        rank={
-                                                            cardsOptions[card]
-                                                                .rank
-                                                        }
-                                                        suit={
-                                                            cardsOptions[card]
-                                                                .suit
-                                                        }
-                                                    />
-                                                </li>
-                                            ))}
-                                        </>
-                                    ) : (
-                                        <>
-                                            {Array.from(
-                                                Array(player.cardsOnHand).keys()
-                                            ).map((card) => (
-                                                <li key={card}>
-                                                    <div
-                                                        className={'card back'}
-                                                    >
-                                                        *
-                                                    </div>
-                                                </li>
-                                            ))}
-                                        </>
-                                    )}
-                                </ul>
-
-                                <Typography>{player.bet}</Typography>
-                            </Box>
-
-                            {player.play && (
-                                <Box
-                                    className={
-                                        mainPlayer
-                                            ? styles.primaryCards
-                                            : styles.secondaryCards
-                                    }
-                                >
-                                    <Card
-                                        rank={
-                                            cardsOptions[player.play.cardId]
-                                                .rank
-                                        }
-                                        suit={
-                                            cardsOptions[player.play.cardId]
-                                                .suit
-                                        }
-                                    />
-                                </Box>
-                            )}
-                        </React.Fragment>
-                    );
-                })}
-
-                {matchData?.match.tableCard !== undefined && (
-                    <Box className={styles.tableCard}>
-                        <Card
-                            rank={cardsOptions[matchData?.match.tableCard].rank}
-                            suit={cardsOptions[matchData?.match.tableCard].suit}
-                        />
-                    </Box>
-                )}
-            </Box> */}
         </Box>
     );
 };
