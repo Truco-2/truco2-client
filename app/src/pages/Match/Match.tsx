@@ -109,9 +109,9 @@ const Match: React.FC = () => {
 
     return (
         <Box className={styles.container}>
-            <Typography>Sala Do Jogo</Typography>
+            <Typography className={styles.text}>Sala Do Jogo</Typography>
 
-            <Typography>Timer: {count}</Typography>
+            <Typography className={styles.text}>Timer: {count}</Typography>
 
             <Box className={styles.tableContainer}>
                 <Table

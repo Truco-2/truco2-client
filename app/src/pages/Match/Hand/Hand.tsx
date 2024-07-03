@@ -8,6 +8,8 @@ import Card from '../Card/Card';
 
 import BackCard from '../BackCard/BackCard';
 import { Button } from 'components/ui/Button';
+import { IPlayer } from 'types/Match';
+import PlayerInformations from '../PlayerInformations/PlayerInformations';
 
 interface IHandProps {
     me: boolean;
@@ -16,6 +18,8 @@ interface IHandProps {
     rotation: number;
     radius: number;
     options?: number[];
+    rotate: string;
+    player?: IPlayer;
     handlePlay?: (cardId: number) => void;
     handleBet?: (bet: number) => void;
 }
@@ -24,11 +28,11 @@ const generateTransform = (
     index: number,
     rotation: number,
     radius: number,
-    me: boolean
+    rotate: string
 ) => {
     const value = `rotate(${
         index * rotation
-    }deg) translate(${radius}px) rotate(${me ? '-90deg' : '90deg'})`;
+    }deg) translate(${radius}px) rotate(${rotate})`;
 
     return value;
 };
@@ -40,30 +44,33 @@ const Hand: React.FC<IHandProps> = ({
     radius,
     options = [],
     rotation,
+    rotate,
+    player,
     handlePlay,
     handleBet,
 }) => {
     return (
         <Box
             className={styles.hand}
-            sx={{ transform: generateTransform(index, rotation, radius, me) }}
+            sx={{
+                transform: generateTransform(index, rotation, radius, rotate),
+            }}
         >
-            {me ? (
-                <Box className={styles.flexColumn}>
-                    {options?.length > 0 ? (
-                        <Box className={styles.flex}>
-                            {options.map((option) => (
-                                <Button
-                                    onClick={() =>
-                                        handleBet && handleBet(option)
-                                    }
-                                    key={option}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </Box>
-                    ) : null}
+            {me && options?.length > 0 ? (
+                <Box className={styles.flex}>
+                    {options.map((option) => (
+                        <Button
+                            onClick={() => handleBet && handleBet(option)}
+                            key={option}
+                        >
+                            {option}
+                        </Button>
+                    ))}
+                </Box>
+            ) : null}
+
+            <Box className={styles.flex}>
+                {me ? (
                     <ul className="table">
                         {cards.map((card) => (
                             <li
@@ -74,19 +81,25 @@ const Hand: React.FC<IHandProps> = ({
                             </li>
                         ))}
                     </ul>
-                </Box>
-            ) : (
-                <ul
-                    style={{ width: `${100 + cards.length * 4}px` }}
-                    className="hand"
-                >
-                    {cards.map((card) => (
-                        <li key={card}>
-                            <BackCard />
-                        </li>
-                    ))}
-                </ul>
-            )}
+                ) : (
+                    <ul
+                        style={{ width: `${100 + cards.length * 6}px` }}
+                        className="hand"
+                    >
+                        {cards.map((card) => (
+                            <li key={card}>
+                                <BackCard />
+                            </li>
+                        ))}
+                    </ul>
+                )}
+
+                {handleBet && (
+                    <Box sx={{ marginTop: '1rem' }}>
+                        <PlayerInformations player={player as IPlayer} />
+                    </Box>
+                )}
+            </Box>
         </Box>
     );
 };

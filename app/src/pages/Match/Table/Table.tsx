@@ -49,6 +49,8 @@ const Table: React.FC<ITableProps> = ({
                     ? [player.play.cardId]
                     : [];
 
+                const rotate = me ? '-90deg' : '90deg';
+
                 return (
                     <React.Fragment key={player.id}>
                         <Hand
@@ -60,6 +62,8 @@ const Table: React.FC<ITableProps> = ({
                             handlePlay={handlePlay}
                             handleBet={handleBet}
                             options={options}
+                            rotate={rotate}
+                            player={player}
                         />
 
                         {cardPlay.length > 0 && (
@@ -71,6 +75,8 @@ const Table: React.FC<ITableProps> = ({
                                     (tableRef.current?.offsetWidth ?? 0) / 3.5
                                 }
                                 rotation={360 / players.length}
+                                rotate={rotate}
+                                player={player}
                             />
                         )}
                     </React.Fragment>
