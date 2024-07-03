@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import Card from '../Card/Card';
 
 import BackCard from '../BackCard/BackCard';
+import { Button } from 'components/ui/Button';
 
 interface IHandProps {
     me: boolean;
@@ -14,7 +15,9 @@ interface IHandProps {
     index: number;
     rotation: number;
     radius: number;
+    options?: number[];
     handlePlay?: (cardId: number) => void;
+    handleBet?: (bet: number) => void;
 }
 
 const generateTransform = (
@@ -35,8 +38,10 @@ const Hand: React.FC<IHandProps> = ({
     cards,
     index,
     radius,
+    options = [],
     rotation,
     handlePlay,
+    handleBet,
 }) => {
     return (
         <Box
@@ -44,16 +49,32 @@ const Hand: React.FC<IHandProps> = ({
             sx={{ transform: generateTransform(index, rotation, radius, me) }}
         >
             {me ? (
-                <ul className="table">
-                    {cards.map((card) => (
-                        <li
-                            onClick={() => handlePlay && handlePlay(card)}
-                            key={card}
-                        >
-                            <Card card={card} />
-                        </li>
-                    ))}
-                </ul>
+                <Box className={styles.flexColumn}>
+                    {options?.length > 0 ? (
+                        <Box className={styles.flex}>
+                            {options.map((option) => (
+                                <Button
+                                    onClick={() =>
+                                        handleBet && handleBet(option)
+                                    }
+                                    key={option}
+                                >
+                                    {option}
+                                </Button>
+                            ))}
+                        </Box>
+                    ) : null}
+                    <ul className="table">
+                        {cards.map((card) => (
+                            <li
+                                onClick={() => handlePlay && handlePlay(card)}
+                                key={card}
+                            >
+                                <Card card={card} />
+                            </li>
+                        ))}
+                    </ul>
+                </Box>
             ) : (
                 <ul
                     style={{ width: `${100 + cards.length * 4}px` }}

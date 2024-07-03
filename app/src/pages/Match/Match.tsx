@@ -8,7 +8,12 @@ import useSocket from 'hooks/useSocket';
 
 import { useParams } from 'react-router-dom';
 
-import { IMatchData, IPlayerRequestData, ISocketData } from 'types/Match';
+import {
+    IBetData,
+    IMatchData,
+    IPlayerRequestData,
+    ISocketData,
+} from 'types/Match';
 
 import Table from './Table/Table';
 
@@ -17,6 +22,7 @@ import { userInformations } from 'helpers/session';
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
     const [count, setCount] = useState<number>(0);
+    const [options, setOptions] = useState<number[]>([]);
 
     const { socket } = useSocket('match');
 
@@ -56,9 +62,28 @@ const Match: React.FC = () => {
             case 'PLAY_REQUEST': {
                 const data = payload.data as IPlayerRequestData;
 
+                if (code === 'BET_REQUEST' && data.playerId === userId) {
+                    setOptions(data.options);
+                } else {
+                    setOptions([]);
+                }
+
                 setCount(data.counter);
                 break;
             }
+            case 'BET':
+                const data = payload.data as IBetData;
+
+                const playerId = data.playerId;
+                const bet = data.bet;
+
+                const player = matchData?.match.players.find(
+                    (player) => player.id === playerId
+                );
+
+                if (player) {
+                    player.bet = bet;
+                }
         }
     };
 
@@ -78,6 +103,10 @@ const Match: React.FC = () => {
         socket?.emit('play', { card });
     };
 
+    const handleBet = (bet: number) => {
+        socket?.emit('bet', { bet });
+    };
+
     return (
         <Box className={styles.container}>
             <Typography>Sala Do Jogo</Typography>
@@ -89,7 +118,9 @@ const Match: React.FC = () => {
                     playerCards={matchData?.cards ?? []}
                     players={matchData?.match.players ?? []}
                     tableCard={matchData?.match.tableCard ?? 0}
+                    options={options}
                     handlePlay={handlePlay}
+                    handleBet={handleBet}
                 />
             </Box>
 

@@ -15,7 +15,9 @@ interface ITableProps {
     players: IPlayer[];
     playerCards: number[];
     tableCard: number;
+    options: number[];
     handlePlay: (cardId: number) => void;
+    handleBet: (bet: number) => void;
 }
 
 const generateCardArray = (length: number) => {
@@ -26,7 +28,9 @@ const Table: React.FC<ITableProps> = ({
     players,
     playerCards,
     tableCard,
+    options,
     handlePlay,
+    handleBet,
 }) => {
     const userId = userInformations().sub;
 
@@ -54,15 +58,21 @@ const Table: React.FC<ITableProps> = ({
                             radius={(tableRef.current?.offsetWidth ?? 0) / 2.2}
                             rotation={360 / players.length}
                             handlePlay={handlePlay}
+                            handleBet={handleBet}
+                            options={options}
                         />
 
-                        <Hand
-                            cards={cardPlay}
-                            me={true}
-                            index={index}
-                            radius={(tableRef.current?.offsetWidth ?? 0) / 3.5}
-                            rotation={360 / players.length}
-                        />
+                        {cardPlay.length > 0 && (
+                            <Hand
+                                cards={cardPlay}
+                                me={true}
+                                index={index}
+                                radius={
+                                    (tableRef.current?.offsetWidth ?? 0) / 3.5
+                                }
+                                rotation={360 / players.length}
+                            />
+                        )}
                     </React.Fragment>
                 );
             })}

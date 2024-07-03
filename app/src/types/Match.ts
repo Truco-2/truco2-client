@@ -42,10 +42,16 @@ interface IUser {
 
 export interface ISocketData {
     code: string;
-    data: IMatchData | IPlayerRequestData;
+    data: IMatchData | IPlayerRequestData | IBetData;
 }
 
 export interface IPlayerRequestData {
     counter: number;
     playerId: number;
+    options: number[];
+}
+
+export interface IBetData {
+    playerId: number;
+    bet: number;
 }
