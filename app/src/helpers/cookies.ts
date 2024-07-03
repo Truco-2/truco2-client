@@ -5,6 +5,7 @@ const cookies = new Cookies();
 export const setCookies = (name: string, content: string, exp: number) => {
     cookies.set(name, content, {
         expires: new Date(exp * 1000),
+        path: '/',
     });
 };
 

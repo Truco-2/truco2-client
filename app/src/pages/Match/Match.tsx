@@ -2,111 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import styles from './Match.module.scss';
 
-import 'game/cards.css';
-
 import { Box, Typography } from '@mui/material';
 
 import useSocket from 'hooks/useSocket';
 
-import { userInformations } from 'helpers/session';
-
 import { useParams } from 'react-router-dom';
-import Card from './Card/Card';
-import { CardSuit } from 'types/Card';
 
-interface IPlayerRequestData {
-    counter: number;
-    playerId: number;
-}
+import { IMatchData, IPlayerRequestData, ISocketData } from 'types/Match';
 
-interface IData {
-    code: string;
-    data: IMatchData | IPlayerRequestData;
-}
-
-interface IUser {
-    id: number;
-    name: string;
-}
-
-interface IPlay {
-    cardId: number;
-    id: number;
-}
-
-interface IPlayer {
-    id: number;
-    status: string; //ENUM
-    bet: number;
-    cardsOnHand: number;
-    play: IPlay;
-    type: string; //ENUM
-    user: IUser;
-    wins: number;
-}
-
-interface IMatch {
-    id: number;
-    status: string;
-    roomCode: string;
-    round: number;
-    turn: number;
-    turnsLeft: number;
-    littleCorner: string;
-    sky: string;
-    tableCard: number;
-    playOrder: number[];
-    players: IPlayer[];
-}
-
-interface IMatchData {
-    playerId: number;
-    status: string; // ENUM;
-    cards: number[];
-    match: IMatch;
-}
-
-const suitHelper: Record<number, CardSuit> = {
-    0: CardSuit.DIAMS,
-    1: CardSuit.SPADES,
-    2: CardSuit.HEARTS,
-    3: CardSuit.CLUBS,
-};
-
-interface ICardOptions {
-    rank: string;
-    suit: CardSuit;
-}
-
-const generateCards = () => {
-    const cardsArray = ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3'];
-
-    let cardId = 0;
-
-    const teste: Record<string, ICardOptions> = cardsArray.reduce(
-        (acc, item) => {
-            const newObject: Record<string, ICardOptions> = {};
-
-            [0, 1, 2, 3].forEach((c) => {
-                newObject[cardId] = {
-                    rank: item,
-                    suit: suitHelper[c],
-                };
-
-                cardId++;
-            });
-
-            return { ...acc, ...newObject };
-        },
-        {}
-    );
-
-    return teste;
-};
-
-const cardsOptions = generateCards();
-
-console.log(cardsOptions);
+import Table from './Table/Table';
 
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
@@ -116,9 +20,7 @@ const Match: React.FC = () => {
 
     const { id } = useParams();
 
-    const userId = userInformations().sub;
-
-    const handleMatchMsg = (payload: IData) => {
+    const handleMatchMsg = (payload: ISocketData) => {
         console.log('payload: ', payload);
 
         const code = payload.code;
@@ -154,19 +56,26 @@ const Match: React.FC = () => {
                 socket.off('match-msg', handleMatchMsg);
             };
         }
-    }, [socket, id, userId]);
+    }, [socket, id]);
 
-    const handlePlay = (card: number) => {
-        socket?.emit('play', { card });
-    };
+    // const handlePlay = (card: number) => {
+    //     socket?.emit('play', { card });
+    // };
 
     return (
-        <Box className="playingCards">
+        <Box className={styles.container}>
             <Typography>Sala Do Jogo</Typography>
 
             <Typography>{count}</Typography>
 
-            <Box className={styles.table}>
+            <Box className={styles.tableContainer}>
+                <Table
+                    playerCards={matchData?.cards ?? []}
+                    players={matchData?.match.players ?? []}
+                />
+            </Box>
+
+            {/* <Box className={styles.table}>
                 {matchData?.match.players.map((player) => {
                     const mainPlayer = player.id === userId;
 
@@ -254,7 +163,7 @@ const Match: React.FC = () => {
                         />
                     </Box>
                 )}
-            </Box>
+            </Box> */}
         </Box>
     );
 };

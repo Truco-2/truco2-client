@@ -44,7 +44,7 @@ const SidebarOptions: React.FC = () => {
     const handleLogout = () => {
         cleanCookies('userToken');
 
-        navigate('/login');
+        setTimeout(() => navigate('/login'), 500);
     };
 
     return (
@@ -94,14 +94,16 @@ const SidebarOptions: React.FC = () => {
             <Divider className={styles.divider} />
             <List className={styles.list}>
                 <ListItem disablePadding className={styles.listItem}>
-                    <ListItemButton className={styles.listItemButton}>
+                    <ListItemButton
+                        onClick={handleLogout}
+                        className={styles.listItemButton}
+                    >
                         <ListItemIcon className={styles.listItemIcon}>
                             <LogoutIcon />
                         </ListItemIcon>
                         <ListItemText
                             primary={'Sair'}
                             className={styles.listItemText}
-                            onClick={() => handleLogout()}
                         />
                     </ListItemButton>
                 </ListItem>

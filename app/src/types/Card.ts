@@ -4,3 +4,8 @@ export enum CardSuit {
     SPADES = 'spades',
     CLUBS = 'clubs',
 }
+
+export interface ICardOptions {
+    rank: string;
+    suit: CardSuit;
+}
