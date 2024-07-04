@@ -1,0 +1,53 @@
+#CD GitHub Actions Workflow
+name: CI/CD
+
+on:
+  push:
+    branches: [devel, staging, main]
+
+jobs:
+  deploy-devel:
+    if: github.ref_name == 'devel'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/dev/truco2-client-devel/
+            git pull origin devel
+            sh deploy.sh "devel" "${{ vars.CLIENT_DEVEL_PORT }}"
+  deploy-staging:
+    if: github.ref_name == 'staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/dev/truco2-client-staging/
+            git pull origin staging
+            sh deploy.sh "staging" "${{ vars.CLIENT_STAGING_PORT }}"
+  deploy-production:
+    if: github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/dev/truco2-client/
+            git pull origin main
+            sh deploy.sh "production" "${{ vars.CLIENT_PRODUCTION_PORT }}"

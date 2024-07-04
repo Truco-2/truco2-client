@@ -1,0 +1,26 @@
+services:
+  # image project
+  react-app:
+    build:
+      dockerfile: server.Dockerfile
+      no_cache: true
+      context: ./app
+    restart: unless-stopped
+    container_name: truco2-client-app-${APP_NAME}
+    networks:
+      - appnet
+  nginx:
+    restart: unless-stopped
+    container_name: truco2-client-nginx-${APP_NAME}
+    build:
+      context: ./nginx
+    ports:
+      - ${APP_PORT}:80
+    networks:
+      - appnet
+    depends_on:
+      - react-app
+
+networks:
+  appnet:
+    driver: bridge
