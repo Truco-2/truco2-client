@@ -1,0 +1,116 @@
+.registerDesktopContainer {
+    background-color: #131420;
+    box-shadow: 0px 1px 100px 0px rgba(0, 0, 0, 0.2509803922);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+
+    .containerFlex {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+
+        h1 {
+            font-size: 40px;
+            color: #ffffff;
+        }
+
+        p {
+            color: #ffffffb2;
+        }
+
+        .logoBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // justify-content: center;
+            background-color: #dc8230;
+            border-radius: 1rem 0 0 1rem;
+            padding: 80px 40px;
+            height: 62%;
+            align-self: center;
+            gap: 20%;
+        }
+
+        .formBox {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background-color: #131420d9;
+            border-radius: 0 1rem 1rem 0;
+            padding: 5rem 5rem 5rem 11.25rem;
+
+            .textFieldBox {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+.registerMobileContainer {
+    overflow: hidden;
+    background: #4e4e4e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    h1 {
+        font-size: 40px;
+        color: #ffffff;
+    }
+
+    p {
+        color: #ffffffb2;
+    }
+
+    .resetPasswordAnchor {
+        color: #dc8230;
+    }
+
+    .formBox {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 38px 45px;
+
+        .loginTitle {
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 0.2rem;
+        }
+
+        .body {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            .linkContainer {
+                .link {
+                    color: #dc8230;
+                }
+            }
+        }
+
+        .textFieldBox {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    }
+}

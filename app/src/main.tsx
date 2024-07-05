@@ -20,6 +20,7 @@ import CreateRoom from 'pages/Room/Create/CreateRoom';
 import JoinRoom from 'pages/Room/Join/JoinRoom';
 import Room from 'pages/Room/Room';
 import Match from 'pages/Match/Match';
+import Register from 'pages/Register/Register';
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login />,
+            },
+            {
+                path: '/register',
+                element: <Register />,
             },
         ],
     },
