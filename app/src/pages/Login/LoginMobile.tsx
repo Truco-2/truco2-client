@@ -5,6 +5,7 @@ import styles from './Login.module.scss';
 import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import { Button } from 'components/ui/Button';
 import { TextField } from 'components/ui/TextField';
+import { Link } from 'react-router-dom';
 
 const LoginMobile: React.FC<ILoginScreen> = ({
     handleGuest,
@@ -54,29 +55,24 @@ const LoginMobile: React.FC<ILoginScreen> = ({
                         </Box>
                     </Box>
 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '0.75rem',
-                        }}
-                    >
-                        <Typography>
-                            Esqueceu a senha?
-                            <a
-                                className={styles.resetPasswordAnchor}
-                                onClick={(e) => e.preventDefault()}
-                                target="_blank"
-                                href="/reset-password"
-                            >
-                                Resete a senha
-                            </a>
+                    <Box className={styles.body}>
+                        <Typography className={styles.linkContainer}>
+                            Esqueceu a senha?{' '}
+                            <Link to="/login" className={styles.link}>
+                                Resete a senha.
+                            </Link>
                         </Typography>
 
-                        <Button type="submit" primary="true" fullWidth>
-                            Entrar
-                        </Button>
+                        <Typography className={styles.linkContainer}>
+                            Ainda não tem conta?{' '}
+                            <Link to="/register" className={styles.link}>
+                                Cadastre-se.
+                            </Link>
+                        </Typography>
                     </Box>
+                    <Button type="submit" primary="true" fullWidth>
+                        Entrar
+                    </Button>
 
                     <Typography>
                         Ao entrar concordo com termos de serviços
