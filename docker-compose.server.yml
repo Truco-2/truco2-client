@@ -2,6 +2,8 @@ services:
   # image project
   react-app:
     build:
+      args:
+        APP_MODE: ${APP_MODE}
       dockerfile: server.Dockerfile
       no_cache: true
       context: ./app
