@@ -21,6 +21,7 @@ import { userInformations } from 'helpers/session';
 
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
+    const [matchStatus, setMatchStatus] = useState<string>('');
     const [count, setCount] = useState<number>(0);
     const [options, setOptions] = useState<number[]>([]);
     const [playerToPlay, setPlayerToPlay] = useState<number>(0);
@@ -75,8 +76,14 @@ const Match: React.FC = () => {
                         setOptions([]);
                     }
 
-                    if (code === 'BET_REQUEST' || code === 'PLAY_REQUEST') {
+                    if (code === 'MATCH_START_TIMER') {
+                        setMatchStatus('Iniciando Partida');
+                    } else if (code === 'BET_REQUEST') {
                         setPlayerToPlay(data.playerId);
+                        setMatchStatus('Aguardando Apostas de Blefe');
+                    } else {
+                        setPlayerToPlay(data.playerId);
+                        setMatchStatus('Aguardando Jogada');
                     }
 
                     setCount(data.counter);
@@ -139,7 +146,14 @@ const Match: React.FC = () => {
         <Box className={styles.container}>
             <Typography className={styles.text}>Sala Do Jogo</Typography>
 
-            <Typography className={styles.text}>Timer: {count}</Typography>
+            <Box>
+                <Typography className={styles.subText}>
+                    {matchStatus}
+                </Typography>
+                <Typography className={styles.subText}>
+                    Timer: {count}
+                </Typography>
+            </Box>
 
             <Box className={styles.tableContainer}>
                 <Table
