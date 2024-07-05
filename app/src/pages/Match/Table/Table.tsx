@@ -16,6 +16,7 @@ interface ITableProps {
     playerCards: number[];
     tableCard: number;
     options: number[];
+    playerToPlay: number;
     handlePlay: (cardId: number) => void;
     handleBet: (bet: number) => void;
 }
@@ -29,6 +30,7 @@ const Table: React.FC<ITableProps> = ({
     playerCards,
     tableCard,
     options,
+    playerToPlay,
     handlePlay,
     handleBet,
 }) => {
@@ -45,11 +47,11 @@ const Table: React.FC<ITableProps> = ({
                     ? playerCards
                     : generateCardArray(player.cardsOnHand);
 
-                const cardPlay = player.play?.cardId
-                    ? [player.play.cardId]
-                    : [];
+                const cardPlay = player.play ? [player.play.cardId] : [];
 
                 const rotate = me ? '-90deg' : '90deg';
+
+                const isMyTurn = playerToPlay === player.id;
 
                 return (
                     <React.Fragment key={player.id}>
@@ -57,13 +59,14 @@ const Table: React.FC<ITableProps> = ({
                             cards={cards}
                             me={me}
                             index={index}
-                            radius={(tableRef.current?.offsetWidth ?? 0) / 2.2}
+                            radius={(tableRef.current?.offsetWidth ?? 0) / 2}
                             rotation={360 / players.length}
                             handlePlay={handlePlay}
                             handleBet={handleBet}
                             options={options}
                             rotate={rotate}
                             player={player}
+                            isMyTurn={isMyTurn}
                         />
 
                         {cardPlay.length > 0 && (

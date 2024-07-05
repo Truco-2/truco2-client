@@ -9,7 +9,7 @@ import useSocket from 'hooks/useSocket';
 import { useParams } from 'react-router-dom';
 
 import {
-    // IBetData,
+    IBetData,
     IMatchData,
     IPlayerRequestData,
     ISocketData,
@@ -23,6 +23,7 @@ const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
     const [count, setCount] = useState<number>(0);
     const [options, setOptions] = useState<number[]>([]);
+    const [playerToPlay, setPlayerToPlay] = useState<number>(0);
 
     const { socket } = useSocket('match');
 
@@ -55,7 +56,12 @@ const Match: React.FC = () => {
                         data.match.players = [...newArray, ...array];
                     }
 
-                    setMatchData(data);
+                    setTimeout(
+                        () => {
+                            setMatchData(data);
+                        },
+                        code === 'TURN_START' ? 1000 : 0
+                    );
                     break;
                 }
                 case 'BET_REQUEST':
@@ -69,22 +75,38 @@ const Match: React.FC = () => {
                         setOptions([]);
                     }
 
+                    if (code === 'BET_REQUEST' || code === 'PLAY_REQUEST') {
+                        setPlayerToPlay(data.playerId);
+                    }
+
                     setCount(data.counter);
                     break;
                 }
                 case 'BET': {
-                    // const data = payload.data as IBetData;
+                    const data = payload.data as IBetData;
 
-                    // const playerId = data.playerId;
-                    // const bet = data.bet;
+                    const playerId = data.playerId;
+                    const bet = data.bet;
 
-                    // const player = matchData?.match.players.find(
-                    //     (player) => player.id === playerId
-                    // );
-
-                    // if (player) {
-                    //     player.bet = bet;
-                    // }
+                    setMatchData((prev) =>
+                        prev
+                            ? {
+                                  ...prev,
+                                  match: {
+                                      ...prev.match,
+                                      players: prev.match.players.map(
+                                          (player) => ({
+                                              ...player,
+                                              bet:
+                                                  player.id === playerId
+                                                      ? bet
+                                                      : player.bet,
+                                          })
+                                      ),
+                                  },
+                              }
+                            : prev
+                    );
 
                     break;
                 }
@@ -125,6 +147,7 @@ const Match: React.FC = () => {
                     players={matchData?.match.players ?? []}
                     tableCard={matchData?.match.tableCard ?? 0}
                     options={options}
+                    playerToPlay={playerToPlay}
                     handlePlay={handlePlay}
                     handleBet={handleBet}
                 />
