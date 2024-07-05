@@ -20,7 +20,7 @@ jobs:
           script: |
             cd /home/dev/truco2-client-devel/
             git pull origin devel
-            sh deploy.sh "devel" "${{ vars.CLIENT_DEVEL_PORT }}"
+            sh deploy.sh "devel" "${{ vars.CLIENT_DEVEL_PORT }}" "development"
   deploy-staging:
     if: github.ref_name == 'staging'
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
           script: |
             cd /home/dev/truco2-client-staging/
             git pull origin staging
-            sh deploy.sh "staging" "${{ vars.CLIENT_STAGING_PORT }}"
+            sh deploy.sh "staging" "${{ vars.CLIENT_STAGING_PORT }}" "staging"
   deploy-production:
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest
@@ -50,4 +50,4 @@ jobs:
           script: |
             cd /home/dev/truco2-client/
             git pull origin main
-            sh deploy.sh "production" "${{ vars.CLIENT_PRODUCTION_PORT }}"
+            sh deploy.sh "production" "${{ vars.CLIENT_PRODUCTION_PORT }}" "production"
