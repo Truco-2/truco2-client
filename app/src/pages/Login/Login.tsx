@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { IGuestResponse, ILoginData } from 'types/Login.ts';
+import { IGuestResponse, ILoginData, ILoginResponse } from 'types/Login.ts';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { setCookies } from 'helpers/cookies.ts';
 import { API_ROOT_PATH, GUEST_LOGIN_PATH } from 'helpers/apiHelper';
+import { login } from 'services/Login';
 import LoginDesktop from './LoginDesktop';
 import LoginMobile from './LoginMobile';
 import { useMediaQuery } from '@mui/material';
@@ -27,9 +28,17 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogin = (data: ILoginData) => {
-        console.log('data: ', data);
+        login((response) => {
+            if (response.status === 201) {
+                const jwtData: ILoginResponse = response.data.data;
 
-        console.log('submit');
+                const decoded = jwtDecode(jwtData.access_token);
+
+                setCookies('userToken', jwtData.access_token, decoded.exp ?? 0);
+
+                navigate('/');
+            }
+        }, data);
     };
 
     const handleGuest = async () => {
@@ -40,11 +49,7 @@ const Login: React.FC = () => {
         if (response.status === 200) {
             const jwtData: IGuestResponse = response.data.data;
 
-            console.log('jwt: ', jwtData);
-
             const decoded = jwtDecode(jwtData.access_token);
-
-            console.log('decoded: ', decoded);
 
             setCookies('userToken', jwtData.access_token, decoded.exp ?? 0);
 
