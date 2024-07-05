@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Hand.module.scss';
 
-import { Box } from '@mui/material';
+import { Badge, Box } from '@mui/material';
 
 import Card from '../Card/Card';
 
@@ -20,6 +20,7 @@ interface IHandProps {
     options?: number[];
     rotate: string;
     player?: IPlayer;
+    isMyTurn?: boolean;
     handlePlay?: (cardId: number) => void;
     handleBet?: (bet: number) => void;
 }
@@ -46,6 +47,7 @@ const Hand: React.FC<IHandProps> = ({
     rotation,
     rotate,
     player,
+    isMyTurn = false,
     handlePlay,
     handleBet,
 }) => {
@@ -56,50 +58,66 @@ const Hand: React.FC<IHandProps> = ({
                 transform: generateTransform(index, rotation, radius, rotate),
             }}
         >
-            {me && options?.length > 0 ? (
-                <Box className={styles.flex}>
-                    {options.map((option) => (
-                        <Button
-                            onClick={() => handleBet && handleBet(option)}
-                            key={option}
-                        >
-                            {option}
-                        </Button>
-                    ))}
-                </Box>
-            ) : null}
+            <Badge
+                color={'warning'}
+                badgeContent=" "
+                invisible={isMyTurn === false}
+            >
+                <Box className={styles.badge}>
+                    {me && options?.length > 0 ? (
+                        <Box className={styles.flex}>
+                            {options.map((option) => (
+                                <Button
+                                    onClick={() =>
+                                        handleBet && handleBet(option)
+                                    }
+                                    key={option}
+                                >
+                                    {option}
+                                </Button>
+                            ))}
+                        </Box>
+                    ) : null}
 
-            <Box className={styles.flex}>
-                {me ? (
-                    <ul className="table">
-                        {cards.map((card) => (
-                            <li
-                                onClick={() => handlePlay && handlePlay(card)}
-                                key={card}
+                    <Box className={styles.flex}>
+                        {me ? (
+                            <ul className="table">
+                                {cards.map((card) => (
+                                    <li
+                                        onClick={() =>
+                                            handlePlay && handlePlay(card)
+                                        }
+                                        key={card}
+                                    >
+                                        <Card card={card} />
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <ul
+                                style={{
+                                    width: `${100 + cards.length * 10}px`,
+                                }}
+                                className="hand"
                             >
-                                <Card card={card} />
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <ul
-                        style={{ width: `${100 + cards.length * 6}px` }}
-                        className="hand"
-                    >
-                        {cards.map((card) => (
-                            <li key={card}>
-                                <BackCard />
-                            </li>
-                        ))}
-                    </ul>
-                )}
+                                {cards.map((card) => (
+                                    <li key={card}>
+                                        <BackCard />
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
 
-                {handleBet && (
-                    <Box sx={{ marginTop: '1rem' }}>
-                        <PlayerInformations player={player as IPlayer} />
+                        {handleBet && (
+                            <Box sx={{ marginTop: '1rem' }}>
+                                <PlayerInformations
+                                    player={player as IPlayer}
+                                />
+                            </Box>
+                        )}
                     </Box>
-                )}
-            </Box>
+                </Box>
+            </Badge>
         </Box>
     );
 };

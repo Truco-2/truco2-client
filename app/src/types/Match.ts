@@ -21,7 +21,7 @@ interface IMatch {
 
 export interface IPlayer {
     id: number;
-    status: string; //ENUM
+    status: PlayerStatus;
     bet: number;
     cardsOnHand: number;
     play: IPlay;
@@ -54,4 +54,9 @@ export interface IPlayerRequestData {
 export interface IBetData {
     playerId: number;
     bet: number;
+}
+
+export enum PlayerStatus {
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE',
 }

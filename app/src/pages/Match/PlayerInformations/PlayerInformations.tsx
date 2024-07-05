@@ -22,6 +22,7 @@ const PlayerInformations: React.FC<IPlayerInformationsProps> = ({ player }) => {
                 },
             }}
         >
+            <Typography>Status: {player.status}</Typography>
             <Typography>{player.user.name}</Typography>
             {player.bet !== null && (
                 <Typography>{player.bet} blefes</Typography>
