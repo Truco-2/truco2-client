@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { Button } from 'components/ui/Button';
-import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import { TextField } from 'components/ui/TextField';
 import React from 'react';
 import { IRegisterScreen } from 'types/Register';
@@ -13,7 +12,6 @@ const RegisterMobile: React.FC<IRegisterScreen> = ({
 }) => {
     return (
         <Box className={styles.registerMobileContainer}>
-            <HeaderMobile />
             <Box>
                 <form
                     className={styles.formBox}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Hand.module.scss';
 
-import { Badge, Box } from '@mui/material';
+import { Badge, Box, makeStyles } from '@mui/material';
 
 import Card from '../Card/Card';
 
@@ -23,6 +23,7 @@ interface IHandProps {
     isMyTurn?: boolean;
     handlePlay?: (cardId: number) => void;
     handleBet?: (bet: number) => void;
+    isMobile?: boolean;
 }
 
 const generateTransform = (
@@ -50,6 +51,7 @@ const Hand: React.FC<IHandProps> = ({
     isMyTurn = false,
     handlePlay,
     handleBet,
+    isMobile,
 }) => {
     return (
         <Box
@@ -60,12 +62,15 @@ const Hand: React.FC<IHandProps> = ({
         >
             <Badge
                 color={'warning'}
-                badgeContent=" "
+                variant="dot"
                 invisible={isMyTurn === false}
             >
                 <Box className={styles.badge}>
                     {me && options?.length > 0 ? (
-                        <Box className={styles.flex}>
+                        <Box
+                            className={styles.flex}
+                            sx={{ transform: isMobile ? 'scale(0.7)' : '' }}
+                        >
                             {options.map((option) => (
                                 <Button
                                     onClick={() =>
@@ -81,7 +86,11 @@ const Hand: React.FC<IHandProps> = ({
 
                     <Box className={styles.flex}>
                         {me ? (
-                            <ul className="table">
+                            <ul
+                                className={`table ${
+                                    isMobile && styles.tableMobile
+                                }`}
+                            >
                                 {cards.map((card) => (
                                     <li
                                         onClick={() =>
@@ -89,29 +98,41 @@ const Hand: React.FC<IHandProps> = ({
                                         }
                                         key={card}
                                     >
-                                        <Card card={card} />
+                                        <Card isMobile={isMobile} card={card} />
                                     </li>
                                 ))}
                             </ul>
                         ) : (
-                            <ul
-                                style={{
-                                    width: `${100 + cards.length * 10}px`,
-                                }}
-                                className="hand"
-                            >
-                                {cards.map((card) => (
-                                    <li key={card}>
-                                        <BackCard />
-                                    </li>
-                                ))}
-                            </ul>
+                            <>
+                                {isMobile ? (
+                                    <BackCard
+                                        isMobile
+                                        cardCount={cards.length}
+                                    />
+                                ) : (
+                                    <ul
+                                        style={{
+                                            width: `${
+                                                100 + cards.length * 10
+                                            }px`,
+                                        }}
+                                        className="hand"
+                                    >
+                                        {cards.map((card) => (
+                                            <li key={card}>
+                                                <BackCard />
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </>
                         )}
 
                         {handleBet && (
                             <Box sx={{ marginTop: '1rem' }}>
                                 <PlayerInformations
                                     player={player as IPlayer}
+                                    isMobile={isMobile}
                                 />
                             </Box>
                         )}

@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { ILoginScreen } from 'types/Login';
 import styles from './Login.module.scss';
-import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import { Button } from 'components/ui/Button';
 import { TextField } from 'components/ui/TextField';
 import { Link } from 'react-router-dom';
@@ -15,7 +14,6 @@ const LoginMobile: React.FC<ILoginScreen> = ({
 }) => {
     return (
         <Box className={styles.loginMobileContainer}>
-            <HeaderMobile />
             <Box>
                 <form
                     className={styles.formBox}
