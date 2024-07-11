@@ -1,8 +1,18 @@
-.table {
+.tableDesktop {
     position: relative;
     width: 70vh;
     height: 70vh;
-    // border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transform: rotate(90deg);
+    background-image: url('../../../assets/Table.svg');
+    background-size: cover;
+}
+
+.tableMobile {
+    position: relative;
+    width: 40vh;
+    height: 40vh;
     display: grid;
     place-items: center;
     transform: rotate(90deg);

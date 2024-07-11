@@ -4,7 +4,6 @@ import { IRoomScreen } from 'types/Room';
 import styles from './Room.module.scss';
 import PlayerListTable from 'components/Table/PlayerListTable/PlayerListTable';
 import { FormButton } from 'components/ui/Button';
-import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import { TextField } from 'components/ui/TextField';
 
 const RoomMobile: React.FC<IRoomScreen> = ({
@@ -19,7 +18,6 @@ const RoomMobile: React.FC<IRoomScreen> = ({
 }) => {
     return (
         <Box className={styles.mobileContainer}>
-            <HeaderMobile />
             <div className={styles.img} />
             <Box className={styles.containerMobile}>
                 <Box className={styles.roomContainer}>

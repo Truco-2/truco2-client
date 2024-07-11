@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material';
-import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import React from 'react';
 import styles from './Home.module.scss';
 import { IHomeScreen } from 'types/Home';
@@ -10,7 +9,6 @@ import RoomListTable from 'components/Table/RoomListTable/RoomListTable';
 const HomeMobile: React.FC<IHomeScreen> = ({ navigate, rooms }) => {
     return (
         <Box className={styles.homeMobileContainer}>
-            <HeaderMobile />
             <Box className={styles.content}>
                 <Typography className={styles.title}>Jogar</Typography>
 

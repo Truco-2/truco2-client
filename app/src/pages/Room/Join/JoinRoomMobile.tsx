@@ -4,7 +4,6 @@ import { FormButton } from 'components/ui/Button';
 import { TextField } from 'components/ui/TextField';
 import { IJoinRoomScreen } from 'types/Room';
 import styles from './JoinRoom.module.scss';
-import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 
 const JoinRoomMobile: React.FC<IJoinRoomScreen> = ({
     handleJoinRoom,
@@ -13,7 +12,6 @@ const JoinRoomMobile: React.FC<IJoinRoomScreen> = ({
 }) => {
     return (
         <Box className={styles.mobileContainer}>
-            <HeaderMobile />
             <div className={styles.img} />
             <form
                 onSubmit={handleSubmit(handleJoinRoom)}

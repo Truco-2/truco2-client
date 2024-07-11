@@ -12,6 +12,7 @@ import { login } from 'services/Login';
 import LoginDesktop from './LoginDesktop';
 import LoginMobile from './LoginMobile';
 import { useMediaQuery } from '@mui/material';
+import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 
 const loginSchema = z.object({
     email: z.string(),
@@ -60,12 +61,16 @@ const Login: React.FC = () => {
     return (
         <React.Fragment>
             {isMobile ? (
-                <LoginMobile
-                    handleLogin={handleLogin}
-                    handleGuest={handleGuest}
-                    register={register}
-                    handleSubmit={handleSubmit}
-                />
+                <div style={{ marginTop: '4rem' }}>
+                    <HeaderMobile />
+
+                    <LoginMobile
+                        handleLogin={handleLogin}
+                        handleGuest={handleGuest}
+                        register={register}
+                        handleSubmit={handleSubmit}
+                    />
+                </div>
             ) : (
                 <LoginDesktop
                     handleLogin={handleLogin}

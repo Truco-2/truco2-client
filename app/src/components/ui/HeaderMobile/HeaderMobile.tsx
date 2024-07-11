@@ -37,6 +37,7 @@ const StyledAccordion = styled(Accordion)(
         border: 'solid #FE6B01 1px !important',
         position: 'absolute',
         zIndex: '20',
+        transform: 'translate(0, -4rem)',
         width: 'calc(100% - 2px)',
         ':after': expanded
             ? {
@@ -138,6 +139,7 @@ const HeaderMobile: React.FC = () => {
                                     }
                                     onClick={() => {
                                         setOptionSelected(option.text);
+                                        setExpanded(false);
                                         navigate(option.url);
                                     }}
                                 >

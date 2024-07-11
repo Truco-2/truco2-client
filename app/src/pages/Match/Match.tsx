@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import styles from './Match.module.scss';
-
-import { Box, Typography } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 
 import useSocket from 'hooks/useSocket';
 
@@ -17,10 +15,9 @@ import {
     ISocketData,
 } from 'types/Match';
 
-import Table from './Table/Table';
-
 import { userInformations } from 'helpers/session';
-import Chat from './Chat/Chat';
+import MatchMobile from './MatchMobile';
+import MatchDesktop from './MatchDesktop';
 
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
@@ -31,6 +28,7 @@ const Match: React.FC = () => {
     const [messages, setMessages] = useState<IMessage[]>([]);
 
     const playerIdToUserName = useRef<Record<number, string>>({});
+    const isMobile = useMediaQuery('(max-width:800px)');
 
     const { socket } = useSocket('match');
 
@@ -192,39 +190,41 @@ const Match: React.FC = () => {
     };
 
     return (
-        <Box className={styles.container}>
-            <Box className={styles.matchContainer}>
-                <Typography className={styles.text}>Sala Do Jogo</Typography>
-
-                <Box>
-                    <Typography className={styles.subText}>
-                        {matchStatus}
-                    </Typography>
-                    <Typography className={styles.subText}>
-                        Timer: {count}
-                    </Typography>
-                </Box>
-
-                <Box className={styles.tableContainer}>
-                    <Table
-                        playerCards={matchData?.cards ?? []}
-                        players={matchData?.match.players ?? []}
-                        tableCard={matchData?.match.tableCard ?? 0}
-                        options={options}
-                        playerToPlay={playerToPlay}
-                        handlePlay={handlePlay}
-                        handleBet={handleBet}
-                    />
-                </Box>
-            </Box>
-
-            <Box className={styles.chatContainer}>
-                <Chat
-                    messages={messages}
+        <>
+            {isMobile ? (
+                <MatchMobile
                     sendMessageBySocket={sendMessageBySocket}
+                    matchStatus={matchStatus}
+                    count={count}
+                    matchData={matchData}
+                    options={options}
+                    playerToPlay={playerToPlay}
+                    handlePlay={handlePlay}
+                    handleBet={handleBet}
+                    handleMatchChat={handleMatchChat}
+                    handleMatchMsg={handleMatchMsg}
+                    id={id}
+                    messages={messages}
+                    socket={socket}
                 />
-            </Box>
-        </Box>
+            ) : (
+                <MatchDesktop
+                    messages={messages}
+                    handleMatchChat={handleMatchChat}
+                    handleMatchMsg={handleMatchMsg}
+                    id={id}
+                    socket={socket}
+                    sendMessageBySocket={sendMessageBySocket}
+                    matchStatus={matchStatus}
+                    count={count}
+                    matchData={matchData}
+                    options={options}
+                    playerToPlay={playerToPlay}
+                    handlePlay={handlePlay}
+                    handleBet={handleBet}
+                />
+            )}
+        </>
     );
 };
 

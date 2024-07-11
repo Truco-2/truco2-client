@@ -19,6 +19,7 @@ interface ITableProps {
     playerToPlay: number;
     handlePlay: (cardId: number) => void;
     handleBet: (bet: number) => void;
+    isMobile?: boolean;
 }
 
 const generateCardArray = (length: number) => {
@@ -33,13 +34,18 @@ const Table: React.FC<ITableProps> = ({
     playerToPlay,
     handlePlay,
     handleBet,
+    isMobile,
 }) => {
     const userId = userInformations().sub;
-
     const tableRef = useRef<HTMLDivElement>();
 
     return (
-        <Box className={`playingCards ${styles.table}`} ref={tableRef}>
+        <Box
+            className={`playingCards ${
+                isMobile ? styles.tableMobile : styles.tableDesktop
+            }`}
+            ref={tableRef}
+        >
             {players.map((player, index) => {
                 const me = player.id === userId;
 
@@ -67,6 +73,7 @@ const Table: React.FC<ITableProps> = ({
                             rotate={rotate}
                             player={player}
                             isMyTurn={isMyTurn}
+                            isMobile={isMobile}
                         />
 
                         {cardPlay.length > 0 && (
@@ -80,13 +87,14 @@ const Table: React.FC<ITableProps> = ({
                                 rotation={360 / players.length}
                                 rotate={rotate}
                                 player={player}
+                                isMobile={isMobile}
                             />
                         )}
                     </React.Fragment>
                 );
             })}
 
-            <TableCard card={tableCard} />
+            <TableCard isMobile={isMobile} card={tableCard} />
         </Box>
     );
 };

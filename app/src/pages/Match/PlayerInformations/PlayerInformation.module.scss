@@ -1,0 +1,25 @@
+.playerInformationsContainerDesktop {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    p {
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 36px;
+        text-align: left;
+        color: white;
+    }
+}
+
+.playerInformationsContainerMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    p {
+        font-size: 0.8rem;
+        text-align: left;
+        color: white;
+    }
+}

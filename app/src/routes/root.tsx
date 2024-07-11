@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import { Box, Container, useMediaQuery } from '@mui/material';
 import SocketProvider from 'contexts/SocketContext';
 import MatchSocketProvider from 'contexts/MatchSocketContext';
+import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 
 const Root: React.FC = () => {
     const isMobile = useMediaQuery('(max-width:800px)');
@@ -17,7 +18,12 @@ const Root: React.FC = () => {
             <MatchSocketProvider>
                 <React.Fragment>
                     {isMobile ? (
-                        <Outlet />
+                        <div>
+                            <HeaderMobile />
+                            <div style={{ marginTop: '4rem' }}>
+                                <Outlet />
+                            </div>
+                        </div>
                     ) : (
                         <MainContainer>
                             <Sidebar />

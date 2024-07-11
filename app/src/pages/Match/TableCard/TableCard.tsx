@@ -6,12 +6,14 @@ import { Box } from '@mui/material';
 
 interface ITableCardProps {
     card: number;
+    isMobile?: boolean;
 }
 
-const TableCard: React.FC<ITableCardProps> = ({ card }) => {
+const TableCard: React.FC<ITableCardProps> = ({ card, isMobile }) => {
+    console.log(isMobile);
     return (
         <Box className={styles.tableCard}>
-            <Card card={card} />
+            <Card card={card} isMobile={isMobile} />
         </Box>
     );
 };

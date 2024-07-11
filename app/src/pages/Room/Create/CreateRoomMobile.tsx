@@ -4,7 +4,6 @@ import { FormButton } from 'components/ui/Button';
 import { ICreateRoomScreen } from 'types/Room';
 import styles from './CreateRoom.module.scss';
 import { StyledSwitch } from 'components/ui/Switch';
-import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
 import { TextField } from 'components/ui/TextField';
 
 const CreateRoomMobile: React.FC<ICreateRoomScreen> = ({
@@ -15,7 +14,6 @@ const CreateRoomMobile: React.FC<ICreateRoomScreen> = ({
 }) => {
     return (
         <Box className={styles.mobileContainer}>
-            <HeaderMobile />
             <div className={styles.img} />
             <form
                 onSubmit={handleSubmit(handleCreateRoom)}
