@@ -69,7 +69,11 @@ const Hand: React.FC<IHandProps> = ({
                     {me && options?.length > 0 ? (
                         <Box
                             className={styles.flex}
-                            sx={{ transform: isMobile ? 'scale(0.7)' : '' }}
+                            sx={{
+                                transform: isMobile
+                                    ? 'scale(0.7);gap:0.5rem'
+                                    : 'gap:0.5rem',
+                            }}
                         >
                             {options.map((option) => (
                                 <Button
