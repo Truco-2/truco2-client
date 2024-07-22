@@ -14,7 +14,7 @@ import {
     styled,
 } from '@mui/material';
 import { LogoContained } from 'assets/Logo';
-import { Home } from '@mui/icons-material';
+import { Height, Home } from '@mui/icons-material';
 import ArrowIcon from 'assets/ArrowIcon.svg';
 import PlayIcon from 'assets/PlayIcon.svg';
 import NewsIcon from 'assets/NewsIcon.svg';
@@ -44,7 +44,7 @@ const StyledAccordion = styled(Accordion)(
                   content: '""',
                   width: '100%',
                   marginTop: '2px',
-                  height: '100vh',
+                  height: '100%',
                   backdropFilter: 'blur(2px)',
                   position: 'absolute',
                   zIndex: '1',

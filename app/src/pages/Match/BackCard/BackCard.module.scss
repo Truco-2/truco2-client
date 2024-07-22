@@ -8,3 +8,16 @@
         right: 45%;
     }
 }
+
+.backMobileCardContainer {
+    position: relative;
+    display: flex;
+
+    .cardCount {
+        font-size: 2rem;
+        font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+        position: absolute;
+        top: 25%;
+        right: 45%;
+    }
+}

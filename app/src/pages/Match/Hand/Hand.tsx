@@ -65,14 +65,14 @@ const Hand: React.FC<IHandProps> = ({
                 variant="dot"
                 invisible={isMyTurn === false}
             >
-                <Box className={styles.badge}>
+                <Box className={isMobile ? styles.badgeMobile : styles.badge}>
                     {me && options?.length > 0 ? (
                         <Box
                             className={styles.flex}
                             sx={{
                                 transform: isMobile
                                     ? 'scale(0.7);gap:0.5rem'
-                                    : 'gap:0.5rem',
+                                    : 'gap:0.5rem;gap:0.5rem',
                             }}
                         >
                             {options.map((option) => (
@@ -99,6 +99,9 @@ const Hand: React.FC<IHandProps> = ({
                                     <li
                                         onClick={() =>
                                             handlePlay && handlePlay(card)
+                                        }
+                                        className={
+                                            isMobile ? styles.cardMobile : ''
                                         }
                                         key={card}
                                     >
@@ -133,7 +136,12 @@ const Hand: React.FC<IHandProps> = ({
                         )}
 
                         {handleBet && (
-                            <Box sx={{ marginTop: '1rem' }}>
+                            <Box
+                                sx={{
+                                    marginTop: '1rem',
+                                    marginLeft: isMobile ? '1rem' : '',
+                                }}
+                            >
                                 <PlayerInformations
                                     player={player as IPlayer}
                                     isMobile={isMobile}

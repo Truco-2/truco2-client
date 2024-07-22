@@ -190,7 +190,7 @@ const Match: React.FC = () => {
     };
 
     return (
-        <>
+        <React.Fragment>
             {isMobile ? (
                 <MatchMobile
                     sendMessageBySocket={sendMessageBySocket}
@@ -224,7 +224,7 @@ const Match: React.FC = () => {
                     handleBet={handleBet}
                 />
             )}
-        </>
+        </React.Fragment>
     );
 };
 
