@@ -8,7 +8,13 @@ interface IBackCard {
 
 const BackCard: React.FC<IBackCard> = ({ isMobile, cardCount }) => {
     return (
-        <div className={styles.backCardContainer}>
+        <div
+            className={
+                isMobile
+                    ? styles.backMobileCardContainer
+                    : styles.backCardContainer
+            }
+        >
             <div
                 style={{
                     transform: isMobile ? 'scale(0.5)' : '',

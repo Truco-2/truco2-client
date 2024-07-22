@@ -17,4 +17,32 @@
             }
         }
     }
+
+    .badgeMobile {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .flex {
+            display: flex;
+            .tableMobile {
+                display: flex;
+
+                li {
+                    width: 3rem;
+                }
+            }
+        }
+    }
+}
+
+.cardMobile {
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+            font-size: 12px;
+        }
+    }
 }
