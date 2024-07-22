@@ -60,3 +60,17 @@ export enum PlayerStatus {
     ONLINE = 'ONLINE',
     OFFLINE = 'OFFLINE',
 }
+
+export interface IChatSocket {
+    data: IChatSocketData;
+}
+
+interface IChatSocketData {
+    playerId: number;
+    message: string;
+}
+
+export interface IMessage {
+    name: string;
+    message: string;
+}

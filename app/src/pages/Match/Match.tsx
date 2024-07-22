@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import styles from './Match.module.scss';
 
@@ -10,7 +10,9 @@ import { useParams } from 'react-router-dom';
 
 import {
     IBetData,
+    IChatSocket,
     IMatchData,
+    IMessage,
     IPlayerRequestData,
     ISocketData,
 } from 'types/Match';
@@ -18,6 +20,7 @@ import {
 import Table from './Table/Table';
 
 import { userInformations } from 'helpers/session';
+import Chat from './Chat/Chat';
 
 const Match: React.FC = () => {
     const [matchData, setMatchData] = useState<IMatchData>();
@@ -25,6 +28,9 @@ const Match: React.FC = () => {
     const [count, setCount] = useState<number>(0);
     const [options, setOptions] = useState<number[]>([]);
     const [playerToPlay, setPlayerToPlay] = useState<number>(0);
+    const [messages, setMessages] = useState<IMessage[]>([]);
+
+    const playerIdToUserName = useRef<Record<number, string>>({});
 
     const { socket } = useSocket('match');
 
@@ -44,6 +50,16 @@ const Match: React.FC = () => {
                 case 'PLAY':
                 case 'PLAYER_STATUS': {
                     const data = payload.data as IMatchData;
+
+                    if (code === 'PLAYER_STATUS') {
+                        playerIdToUserName.current = data.match.players.reduce(
+                            (acc, item) => ({
+                                ...acc,
+                                [item.id]: item.user.name,
+                            }),
+                            {}
+                        );
+                    }
 
                     const index = data.match.players.findIndex(
                         (p) => p.id === userId
@@ -122,17 +138,33 @@ const Match: React.FC = () => {
         [userId]
     );
 
+    const handleMatchChat = useCallback(
+        (payload: IChatSocket) => {
+            console.log('chat payload: ', payload);
+
+            const newMessage: IMessage = {
+                message: payload.data.message,
+                name: playerIdToUserName.current[payload.data.playerId] ?? '',
+            };
+
+            setMessages((prev) => [...prev, newMessage]);
+        },
+        [playerIdToUserName]
+    );
+
     useEffect(() => {
         if (socket?.connected) {
             socket.emit('enter', {});
 
             socket.on('match-msg', handleMatchMsg);
+            socket.on('match-chat', handleMatchChat);
 
             return () => {
                 socket.off('match-msg', handleMatchMsg);
+                socket.off('match-chat', handleMatchChat);
             };
         }
-    }, [socket, id, handleMatchMsg]);
+    }, [socket, id, handleMatchMsg, handleMatchChat]);
 
     const handlePlay = (card: number) => {
         socket?.emit('play', { card });
@@ -142,28 +174,41 @@ const Match: React.FC = () => {
         socket?.emit('bet', { bet });
     };
 
+    const sendMessageBySocket = (message: string) => {
+        socket?.emit('chat', { message });
+    };
+
     return (
         <Box className={styles.container}>
-            <Typography className={styles.text}>Sala Do Jogo</Typography>
+            <Box className={styles.matchContainer}>
+                <Typography className={styles.text}>Sala Do Jogo</Typography>
 
-            <Box>
-                <Typography className={styles.subText}>
-                    {matchStatus}
-                </Typography>
-                <Typography className={styles.subText}>
-                    Timer: {count}
-                </Typography>
+                <Box>
+                    <Typography className={styles.subText}>
+                        {matchStatus}
+                    </Typography>
+                    <Typography className={styles.subText}>
+                        Timer: {count}
+                    </Typography>
+                </Box>
+
+                <Box className={styles.tableContainer}>
+                    <Table
+                        playerCards={matchData?.cards ?? []}
+                        players={matchData?.match.players ?? []}
+                        tableCard={matchData?.match.tableCard ?? 0}
+                        options={options}
+                        playerToPlay={playerToPlay}
+                        handlePlay={handlePlay}
+                        handleBet={handleBet}
+                    />
+                </Box>
             </Box>
 
-            <Box className={styles.tableContainer}>
-                <Table
-                    playerCards={matchData?.cards ?? []}
-                    players={matchData?.match.players ?? []}
-                    tableCard={matchData?.match.tableCard ?? 0}
-                    options={options}
-                    playerToPlay={playerToPlay}
-                    handlePlay={handlePlay}
-                    handleBet={handleBet}
+            <Box className={styles.chatContainer}>
+                <Chat
+                    messages={messages}
+                    sendMessageBySocket={sendMessageBySocket}
                 />
             </Box>
         </Box>
