@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 
 import useSocket from 'hooks/useSocket';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
     IBetData,
@@ -35,6 +35,8 @@ const Match: React.FC = () => {
     const { socket } = useSocket('match');
 
     const { id } = useParams();
+
+    const navigate = useNavigate();
 
     const userId = userInformations().sub;
 
@@ -133,9 +135,20 @@ const Match: React.FC = () => {
 
                     break;
                 }
+                case 'MATCH_END': {
+                    const data = payload.data as IMatchData;
+
+                    const roomCode = data.match.roomCode;
+
+                    setTimeout(() => {
+                        navigate(`/room/${roomCode}`);
+                    }, 5000);
+
+                    break;
+                }
             }
         },
-        [userId]
+        [userId, navigate]
     );
 
     const handleMatchChat = useCallback(
