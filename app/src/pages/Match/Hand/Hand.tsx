@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Hand.module.scss';
 
-import { Badge, Box, makeStyles } from '@mui/material';
+import { Badge, Box } from '@mui/material';
 
 import Card from '../Card/Card';
 
@@ -60,97 +60,91 @@ const Hand: React.FC<IHandProps> = ({
                 transform: generateTransform(index, rotation, radius, rotate),
             }}
         >
-            <Badge
-                color={'warning'}
-                variant="dot"
-                invisible={isMyTurn === false}
-            >
-                <Box className={isMobile ? styles.badgeMobile : styles.badge}>
-                    {me && options?.length > 0 ? (
-                        <Box
-                            className={styles.flex}
-                            sx={{
-                                transform: isMobile
-                                    ? 'scale(0.7);gap:0.5rem'
-                                    : 'gap:0.5rem;gap:0.5rem',
-                            }}
-                        >
-                            {options.map((option) => (
-                                <Button
-                                    onClick={() =>
-                                        handleBet && handleBet(option)
-                                    }
-                                    key={option}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </Box>
-                    ) : null}
-
-                    <Box className={styles.flex}>
-                        {me ? (
-                            <ul
-                                className={`table ${
-                                    isMobile && styles.tableMobile
-                                }`}
+            <Box className={isMobile ? styles.badgeMobile : styles.badge}>
+                {me && options?.length > 0 ? (
+                    <Box
+                        className={styles.buttonContainer}
+                        sx={{
+                            transform: isMobile
+                                ? 'scale(0.7);gap:0.5rem'
+                                : 'gap:0.5rem;gap:0.5rem',
+                        }}
+                    >
+                        {options.map((option) => (
+                            <Button
+                                onClick={() => handleBet && handleBet(option)}
+                                key={option}
                             >
-                                {cards.map((card) => (
-                                    <li
-                                        onClick={() =>
-                                            handlePlay && handlePlay(card)
-                                        }
-                                        className={
-                                            isMobile ? styles.cardMobile : ''
-                                        }
-                                        key={card}
-                                    >
-                                        <Card isMobile={isMobile} card={card} />
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <>
-                                {isMobile ? (
-                                    <BackCard
-                                        isMobile
-                                        cardCount={cards.length}
-                                    />
-                                ) : (
-                                    <ul
-                                        style={{
-                                            width: `${
-                                                100 + cards.length * 10
-                                            }px`,
-                                        }}
-                                        className="hand"
-                                    >
-                                        {cards.map((card) => (
-                                            <li key={card}>
-                                                <BackCard />
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </>
-                        )}
+                                {option}
+                            </Button>
+                        ))}
+                    </Box>
+                ) : null}
 
-                        {handleBet && (
-                            <Box
-                                sx={{
-                                    marginTop: '1rem',
-                                    marginLeft: isMobile ? '1rem' : '',
-                                }}
+                <Box className={styles.flex}>
+                    {me ? (
+                        <ul
+                            className={`table ${
+                                isMobile && styles.tableMobile
+                            }`}
+                        >
+                            {cards.map((card) => (
+                                <li
+                                    onClick={() =>
+                                        handlePlay && handlePlay(card)
+                                    }
+                                    className={
+                                        isMobile ? styles.cardMobile : ''
+                                    }
+                                    key={card}
+                                >
+                                    <Card isMobile={isMobile} card={card} />
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <>
+                            {isMobile ? (
+                                <BackCard isMobile cardCount={cards.length} />
+                            ) : (
+                                <ul
+                                    style={{
+                                        width: `${100 + cards.length * 10}px`,
+                                    }}
+                                    className="hand"
+                                >
+                                    {cards.map((card) => (
+                                        <li key={card}>
+                                            <BackCard />
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </>
+                    )}
+
+                    {handleBet && (
+                        <Box
+                            className={
+                                me
+                                    ? styles.selfPlayerInformations
+                                    : styles.playerInformations
+                            }
+                        >
+                            <Badge
+                                color={'warning'}
+                                variant={'dot'}
+                                invisible={isMyTurn === false}
                             >
                                 <PlayerInformations
                                     player={player as IPlayer}
                                     isMobile={isMobile}
                                 />
-                            </Box>
-                        )}
-                    </Box>
+                            </Badge>
+                        </Box>
+                    )}
                 </Box>
-            </Badge>
+            </Box>
         </Box>
     );
 };
