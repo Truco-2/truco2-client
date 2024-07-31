@@ -14,7 +14,7 @@ import {
     styled,
 } from '@mui/material';
 import { LogoContained } from 'assets/Logo';
-import { Height, Home } from '@mui/icons-material';
+import { Home } from '@mui/icons-material';
 import ArrowIcon from 'assets/ArrowIcon.svg';
 import PlayIcon from 'assets/PlayIcon.svg';
 import NewsIcon from 'assets/NewsIcon.svg';

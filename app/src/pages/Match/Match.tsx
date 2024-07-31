@@ -4,7 +4,7 @@ import { useMediaQuery } from '@mui/material';
 
 import useSocket from 'hooks/useSocket';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
     IBetData,
@@ -31,8 +31,6 @@ const Match: React.FC = () => {
     const isMobile = useMediaQuery('(max-width:800px)');
 
     const { socket } = useSocket('match');
-
-    const { id } = useParams();
 
     const navigate = useNavigate();
 

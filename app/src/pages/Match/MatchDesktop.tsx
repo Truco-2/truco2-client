@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './Match.module.scss';
 import { Box, Typography } from '@mui/material';
 import Table from './Table/Table';
