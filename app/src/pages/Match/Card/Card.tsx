@@ -26,7 +26,6 @@ const cardsOptions = generateCards();
 const Card: React.FC<ICardProps> = ({ card, isMobile }) => {
     const rank = cardsOptions[card].rank;
     const suit = cardsOptions[card].suit;
-    console.log(isMobile);
     return (
         <div
             className={`card rank-${rank.toLowerCase()} ${suit} ${

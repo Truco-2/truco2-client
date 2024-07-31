@@ -40,8 +40,6 @@ const Match: React.FC = () => {
 
     const handleMatchMsg = useCallback(
         (payload: ISocketData) => {
-            console.log('payload: ', payload);
-
             const code = payload.code;
 
             switch (code) {
@@ -151,8 +149,6 @@ const Match: React.FC = () => {
 
     const handleMatchChat = useCallback(
         (payload: IChatSocket) => {
-            console.log('chat payload: ', payload);
-
             const newMessage: IMessage = {
                 message: payload.data.message,
                 name: playerIdToUserName.current[payload.data.playerId] ?? '',
@@ -160,7 +156,7 @@ const Match: React.FC = () => {
 
             setMessages((prev) => [...prev, newMessage]);
         },
-        [playerIdToUserName]
+        [playerIdToUserName.current]
     );
 
     useEffect(() => {
@@ -175,7 +171,7 @@ const Match: React.FC = () => {
                 socket.off('match-chat', handleMatchChat);
             };
         }
-    }, [socket, id, handleMatchMsg, handleMatchChat]);
+    }, [socket, handleMatchMsg, handleMatchChat]);
 
     const handlePlay = (card: number) => {
         socket?.emit('play', { card });
@@ -201,19 +197,11 @@ const Match: React.FC = () => {
                     playerToPlay={playerToPlay}
                     handlePlay={handlePlay}
                     handleBet={handleBet}
-                    handleMatchChat={handleMatchChat}
-                    handleMatchMsg={handleMatchMsg}
-                    id={id}
                     messages={messages}
-                    socket={socket}
                 />
             ) : (
                 <MatchDesktop
                     messages={messages}
-                    handleMatchChat={handleMatchChat}
-                    handleMatchMsg={handleMatchMsg}
-                    id={id}
-                    socket={socket}
                     sendMessageBySocket={sendMessageBySocket}
                     matchStatus={matchStatus}
                     count={count}

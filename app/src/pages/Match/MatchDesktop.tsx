@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from './Match.module.scss';
 import { Box, Typography } from '@mui/material';
 import Table from './Table/Table';
-import { IChatSocket, IMatchScreen, IMessage } from 'types/Match';
+import { IMatchScreen } from 'types/Match';
 import Chat from './Chat/Chat';
 
 const MatchDesktop: React.FC<IMatchScreen> = ({
@@ -15,25 +15,7 @@ const MatchDesktop: React.FC<IMatchScreen> = ({
     handleBet,
     messages,
     sendMessageBySocket,
-    socket,
-    handleMatchMsg,
-    handleMatchChat,
-    id,
 }) => {
-    useEffect(() => {
-        if (socket?.connected) {
-            socket.emit('enter', {});
-
-            socket.on('match-msg', handleMatchMsg);
-            socket.on('match-chat', handleMatchChat);
-
-            return () => {
-                socket.off('match-msg', handleMatchMsg);
-                socket.off('match-chat', handleMatchChat);
-            };
-        }
-    }, [socket, id, handleMatchMsg, handleMatchChat]);
-
     return (
         <Box className={styles.containerDesktop}>
             <Box className={styles.matchContainer}>
