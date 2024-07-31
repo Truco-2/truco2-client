@@ -11,6 +11,8 @@ import { createRoom } from 'services/Room';
 import { useNavigate } from 'react-router-dom';
 import CreateRoomMobile from './CreateRoomMobile';
 import CreateRoomDesktop from './CreateRoomDesktop';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const roomSchema = z.object({
     name: z.string(),
@@ -31,14 +33,25 @@ const CreateRoom: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const handleCreateRoom = (data: ICreateRoomData) => {
-        createRoom((response) => {
-            const code = response.data.data.code;
+    const handleCreateRoom = async (data: ICreateRoomData) => {
+        await createRoom((response) => {
+            const code = response?.data?.data?.code;
 
             console.log('code: ', code);
 
             if (response.status === 201) {
                 navigate(`/room/${code}`);
+            } else {
+                toast.error(
+                    'Could not create room, please check room data and if you are already in a room. ',
+                    {
+                        position: 'top-right',
+                        closeOnClick: true,
+                        autoClose: 5000,
+                        draggable: true,
+                        theme: 'dark',
+                    }
+                );
             }
         }, data);
     };
@@ -60,6 +73,7 @@ const CreateRoom: React.FC = () => {
                     watch={watch}
                 />
             )}
+            <ToastContainer />
         </>
     );
 };

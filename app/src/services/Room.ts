@@ -21,8 +21,8 @@ export const getRooms = (callback: ICallback) => {
         });
 };
 
-export const createRoom = (callback: ICallback, data: ICreateRoomData) => {
-    axiosInstance
+export const createRoom = async (callback: ICallback, data: ICreateRoomData) => {
+    await axiosInstance
         .post(CREATE_ROOM_PATH, data)
         .then((response) => {
             callback(response);

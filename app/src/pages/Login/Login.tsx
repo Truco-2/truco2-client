@@ -13,6 +13,8 @@ import LoginDesktop from './LoginDesktop';
 import LoginMobile from './LoginMobile';
 import { useMediaQuery } from '@mui/material';
 import HeaderMobile from 'components/ui/HeaderMobile/HeaderMobile';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const loginSchema = z.object({
     email: z.string(),
@@ -38,6 +40,14 @@ const Login: React.FC = () => {
                 setCookies('userToken', jwtData.access_token, decoded.exp ?? 0);
 
                 navigate('/');
+            } else {
+                toast.error('Could not login, please check your credentials.', {
+                    position: 'top-right',
+                    closeOnClick: true,
+                    autoClose: 2000,
+                    draggable: true,
+                    theme: 'dark',
+                });
             }
         }, data);
     };
@@ -83,6 +93,7 @@ const Login: React.FC = () => {
                     handleSubmit={handleSubmit}
                 />
             )}
+            <ToastContainer />
         </React.Fragment>
     );
 };

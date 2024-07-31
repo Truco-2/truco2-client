@@ -8,6 +8,8 @@ import { useMediaQuery } from '@mui/material';
 import RegisterMobile from './RegisterMobile';
 import RegisterDesktop from './RegisterDesktop';
 import { IRegisterData } from 'types/Register';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const registerSchema = z.object({
     name: z.string(),
@@ -29,6 +31,17 @@ const Register: React.FC = () => {
             if (response.status === 201) {
                 console.log(response.data);
                 navigate('/login');
+            } else {
+                toast.error(
+                    'Could not sign in, please check your credentials.',
+                    {
+                        position: 'top-right',
+                        closeOnClick: true,
+                        autoClose: 2000,
+                        draggable: true,
+                        theme: 'dark',
+                    }
+                );
             }
         }, data);
     };
@@ -48,6 +61,7 @@ const Register: React.FC = () => {
                     handleRegister={handleRegister}
                 />
             )}
+            <ToastContainer />
         </React.Fragment>
     );
 };

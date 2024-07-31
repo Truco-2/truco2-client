@@ -12,6 +12,8 @@ import useSocket from 'hooks/useSocket';
 import { createMatch } from 'services/Match';
 import RoomMobile from './RoomMobile';
 import RoomDesktop from './RoomDesktop';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface IRoomProps {
     view?: boolean;
@@ -47,6 +49,17 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
             (response) => {
                 if (response.status === 201) {
                     navigate(`/room/${code}`);
+                } else {
+                    toast.error(
+                        'Could not enter room, please check if you are already in a room.',
+                        {
+                            position: 'top-right',
+                            closeOnClick: true,
+                            autoClose: 5000,
+                            draggable: true,
+                            theme: 'dark',
+                        }
+                    );
                 }
             },
             { code: code ?? '', password }
@@ -150,6 +163,7 @@ const Room: React.FC<IRoomProps> = ({ view = false }) => {
                     handleLeaveRoom={handleLeaveRoom}
                 />
             )}
+            <ToastContainer />
         </>
     );
 };
