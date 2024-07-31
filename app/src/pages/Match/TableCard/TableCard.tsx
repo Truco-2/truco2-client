@@ -10,7 +10,6 @@ interface ITableCardProps {
 }
 
 const TableCard: React.FC<ITableCardProps> = ({ card, isMobile }) => {
-    console.log(isMobile);
     return (
         <Box className={styles.tableCard}>
             <Card card={card} isMobile={isMobile} />

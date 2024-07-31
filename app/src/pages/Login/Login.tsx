@@ -61,7 +61,11 @@ const Login: React.FC = () => {
     return (
         <React.Fragment>
             {isMobile ? (
-                <div style={{ marginTop: '4rem' }}>
+                <div
+                    style={{
+                        marginTop: '4rem',
+                    }}
+                >
                     <HeaderMobile />
 
                     <LoginMobile
