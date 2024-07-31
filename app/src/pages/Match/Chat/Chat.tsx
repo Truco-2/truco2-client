@@ -8,8 +8,8 @@ import { IMessage } from 'types/Match';
 import { userInformations } from 'helpers/session';
 
 interface IChatProps {
-    messages?: IMessage[];
-    sendMessageBySocket?: (message: string) => void;
+    messages: IMessage[];
+    sendMessageBySocket: (message: string) => void;
 }
 
 const Chat: React.FC<IChatProps> = ({ messages, sendMessageBySocket }) => {
@@ -26,9 +26,8 @@ const Chat: React.FC<IChatProps> = ({ messages, sendMessageBySocket }) => {
     };
 
     const handleSendMessage = () => {
-        if (chat && sendMessageBySocket) {
+        if (chat) {
             sendMessageBySocket(chat);
-
             setChat('');
         }
     };

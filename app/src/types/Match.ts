@@ -1,4 +1,3 @@
-import { Socket } from "socket.io-client";
 
 export interface IMatchData {
     playerId: number;
@@ -17,10 +16,6 @@ export interface IMatchScreen {
     handleBet: (bet: number) => void;
     messages: IMessage[];
     sendMessageBySocket: (message: string) => void; 
-    socket:  Socket | undefined;
-    handleMatchMsg: (payload: ISocketData) => void;
-    handleMatchChat: (payload: IChatSocket) => void;
-    id?: string;
 }
 
 interface IMatch {
